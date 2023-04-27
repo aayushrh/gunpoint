@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.HashMap;
 
 public class Player extends JLabel {
     private Vector2 playerPos;
@@ -12,18 +13,18 @@ public class Player extends JLabel {
         sped = 2;
     }
 
-    public void updatePos(boolean w_pressed, boolean a_pressed, boolean s_pressed, boolean d_pressed){
+    public void updatePos(HashMap<String, Boolean> inputs){
         Vector2 input_vector = new Vector2();
-        if(w_pressed){
+        if(inputs.get("W")){
             input_vector.y -= 1;
         }
-        if(a_pressed){
+        if(inputs.get("A")){
             input_vector.x -= 1;
         }
-        if(s_pressed){
+        if(inputs.get("S")){
             input_vector.y += 1;
         }
-        if(d_pressed){
+        if(inputs.get("D")){
             input_vector.x += 1;
         }
         velocity = velocity.add(input_vector.multiply(sped));

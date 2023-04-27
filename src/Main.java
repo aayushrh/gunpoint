@@ -3,13 +3,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.*;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class Main {
     // create a new JLabel object with an image
     private static Player player = new Player(new ImageIcon("Images/player.png"));
     private static Vector2 mousePos = new Vector2();
+
+    private static HashMap<String, Boolean> inputs = new HashMap<>();
     private static boolean w_pressed = false;
     private static boolean a_pressed = false;
     private static boolean s_pressed = false;
@@ -18,6 +20,11 @@ public class Main {
     public static void main(String[] args) {
         // create a JFrame object
         JFrame frame = new JFrame();
+
+        inputs.put("W", false);
+        inputs.put("A", false);
+        inputs.put("S", false);
+        inputs.put("D", false);
 
         // set the title of the window
         frame.setTitle("Gunpoint But Better");
@@ -46,30 +53,30 @@ public class Main {
             }
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_W) {
-                    w_pressed = true;
+                    inputs.replace("W", true);
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_A) {
-                    a_pressed = true;
+                    inputs.replace("A", true);
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_S) {
-                    s_pressed = true;
+                    inputs.replace("S", true);
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_D) {
-                    d_pressed = true;
+                    inputs.replace("D", true);
                 }
             }
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_W) {
-                    w_pressed = false;
+                    inputs.replace("W", false);
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_A) {
-                    a_pressed = false;
+                    inputs.replace("A", false);
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_S) {
-                    s_pressed = false;
+                    inputs.replace("S", false);
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_D) {
-                    d_pressed = false;
+                    inputs.replace("D", false);
                 }
             }
         });
@@ -82,7 +89,7 @@ public class Main {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
-                player.updatePos(w_pressed, a_pressed, s_pressed, d_pressed);
+                player.updatePos(inputs);
             }
         }, 0, 10); // schedule the timer to run every 10 milliseconds
 
