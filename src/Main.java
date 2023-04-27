@@ -12,6 +12,7 @@ public class Main {
     private static Vector2 mousePos = new Vector2();
 
     public static HashMap<String, Boolean> inputs = new HashMap<>();
+    public static ArrayList<Entity> entities = new ArrayList<Entity>();
 
     public static void main(String[] args) {
         // create a JFrame object
@@ -21,6 +22,8 @@ public class Main {
         inputs.put("A", false);
         inputs.put("S", false);
         inputs.put("D", false);
+
+        entities.add(player);
 
         // set the title of the window
         frame.setTitle("Gunpoint But Better");
@@ -75,6 +78,16 @@ public class Main {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
+                for(Entity e : entities){
+                    for(Entity r : entities){
+                        if(!e.equals(r)){
+                            if(e.collLayer == r.collLayer && (e.pos.sub(r.pos).getMag() < e.collRad + r.collRad)){
+                                e.collide(r);
+                                r.collide(e);
+                            }
+                        }
+                    }
+                }
                 player.update();
             }
         }, 0, 10); // schedule the timer to run every 10 milliseconds

@@ -6,7 +6,7 @@ public class Player extends Entity {
     private int sped;
 
     public Player(ImageIcon image){
-        super(image, new Vector2());
+        super(image, new Vector2(), 1, 50);
         velocity = new Vector2();
         sped = 2;
     }
@@ -34,5 +34,9 @@ public class Player extends Entity {
 
     public void update(){
         updatePos();
+    }
+
+    public void collide(Entity other){
+
     }
 }
