@@ -11,18 +11,18 @@ public class Player extends Entity {
         sped = 2;
     }
 
-    public void updatePos(HashMap<String, Boolean> inputs){
+    public void updatePos(){
         Vector2 input_vector = new Vector2();
-        if(inputs.get("W")){
+        if(Main.inputs.get("W")){
             input_vector.y -= 1;
         }
-        if(inputs.get("A")){
+        if(Main.inputs.get("A")){
             input_vector.x -= 1;
         }
-        if(inputs.get("S")){
+        if(Main.inputs.get("S")){
             input_vector.y += 1;
         }
-        if(inputs.get("D")){
+        if(Main.inputs.get("D")){
             input_vector.x += 1;
         }
         input_vector = input_vector.normalize();
@@ -32,7 +32,7 @@ public class Player extends Entity {
         super.setLocation((int)pos.x, (int)pos.y);
     }
 
-    public void update(HashMap<String, Boolean> inputs){
-        updatePos(inputs);
+    public void update(){
+        updatePos();
     }
 }

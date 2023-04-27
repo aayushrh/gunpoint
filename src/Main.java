@@ -11,7 +11,7 @@ public class Main {
     private static Player player = new Player(new ImageIcon("Images/player.png"));
     private static Vector2 mousePos = new Vector2();
 
-    private static HashMap<String, Boolean> inputs = new HashMap<>();
+    public static HashMap<String, Boolean> inputs = new HashMap<>();
 
     public static void main(String[] args) {
         // create a JFrame object
@@ -48,31 +48,19 @@ public class Main {
                 // do nothing
             }
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_W) {
-                    inputs.replace("W", true);
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_A) {
-                    inputs.replace("A", true);
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_S) {
-                    inputs.replace("S", true);
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_D) {
-                    inputs.replace("D", true);
+                int a = e.getKeyCode();
+                for(int i = 65;i<91;i++){
+                    if(a==i){
+                        inputs.replace(Character.toString((char) i),true);
+                    }
                 }
             }
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_W) {
-                    inputs.replace("W", false);
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_A) {
-                    inputs.replace("A", false);
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_S) {
-                    inputs.replace("S", false);
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_D) {
-                    inputs.replace("D", false);
+                int a = e.getKeyCode();
+                for(int i = 65;i<91;i++){
+                    if(a==i){
+                        inputs.replace(Character.toString((char) i),false);
+                    }
                 }
             }
         });
@@ -81,11 +69,13 @@ public class Main {
 
         frame.setVisible(true);
 
+        frame.setFocusable(true);
+
         // create a timer to update the player position every tick
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
-                player.updatePos(inputs);
+                player.update();
             }
         }, 0, 10); // schedule the timer to run every 10 milliseconds
 

@@ -8,5 +8,5 @@ public abstract class Entity extends JLabel {
         this.pos = entityPos;
     }
 
-    public abstract void update(HashMap<String, Boolean> inputs);
+    public abstract void update();
 }
