@@ -1,14 +1,12 @@
 import javax.swing.*;
 import java.util.HashMap;
 
-public class Player extends JLabel {
-    private Vector2 playerPos;
+public class Player extends Entity {
     private Vector2 velocity;
     private int sped;
 
     public Player(ImageIcon image){
-        super(image);
-        playerPos = new Vector2();
+        super(image, new Vector2());
         velocity = new Vector2();
         sped = 2;
     }
@@ -26,10 +24,16 @@ public class Player extends JLabel {
         }
         if(inputs.get("D")){
             input_vector.x += 1;
+            System.out.println("e");
         }
+        input_vector = input_vector.normalize();
         velocity = velocity.add(input_vector.multiply(sped));
         velocity = velocity.multiply(0.9);
-        playerPos = playerPos.add(velocity);
-        super.setLocation((int)playerPos.x, (int)playerPos.y);
+        pos = (pos.add(velocity));
+        super.setLocation((int)pos.x, (int)pos.y);
+    }
+
+    public void update(HashMap<String, Boolean> inputs){
+        updatePos(inputs);
     }
 }

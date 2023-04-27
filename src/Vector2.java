@@ -26,12 +26,21 @@ public class Vector2 {
         return vec;
     }
 
+    public double getMag(){
+        double num = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+        return num;
+    }
+
     public Vector2 normalize(){
-        Vector2 vec = new Vector2();
-        double angle = Math.atan2(this.y, this.x);
-        vec.x = Math.cos(angle);
-        vec.y = Math.sin(angle);
-        return vec;
+        if(getMag() > 0) {
+            Vector2 vec = new Vector2();
+            double angle = Math.atan2(this.y, this.x);
+            vec.x = Math.cos(angle);
+            vec.y = Math.sin(angle);
+            return vec;
+        }else{
+            return this;
+        }
     }
 
     public Vector2 multiply(double n){

@@ -12,10 +12,6 @@ public class Main {
     private static Vector2 mousePos = new Vector2();
 
     private static HashMap<String, Boolean> inputs = new HashMap<>();
-    private static boolean w_pressed = false;
-    private static boolean a_pressed = false;
-    private static boolean s_pressed = false;
-    private static boolean d_pressed = false;
 
     public static void main(String[] args) {
         // create a JFrame object
