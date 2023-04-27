@@ -24,7 +24,6 @@ public class Player extends Entity {
         }
         if(inputs.get("D")){
             input_vector.x += 1;
-            System.out.println("e");
         }
         input_vector = input_vector.normalize();
         velocity = velocity.add(input_vector.multiply(sped));
