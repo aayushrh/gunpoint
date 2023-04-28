@@ -10,8 +10,12 @@ public class Vector2 {
     public Vector2(int x, int y) {
         this.x = x;
         this.y = y;
-    }
 
+    }
+    public Vector2(double angle){
+        this.x = Math.cos(angle);
+        this.y = Math.sin(angle);
+    }
     public Vector2 add(Vector2 other){
         Vector2 vec = new Vector2();
         vec.x = this.x + other.x;
@@ -34,13 +38,17 @@ public class Vector2 {
     public Vector2 normalize(){
         if(getMag() > 0) {
             Vector2 vec = new Vector2();
-            double angle = Math.atan2(this.y, this.x);
+            double angle = getAngle();
             vec.x = Math.cos(angle);
             vec.y = Math.sin(angle);
             return vec;
         }else{
             return this;
         }
+    }
+
+    public double getAngle(){
+        return Math.atan2(this.y, this.x);
     }
 
     public Vector2 multiply(double n){

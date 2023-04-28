@@ -8,7 +8,8 @@ import java.util.Timer;
 
 public class Main {
     // create a new JLabel object with an image
-    private static Player player = new Player(new ImageIcon("Images/player.png"));
+    public static Player player = new Player(new ImageIcon("Images/player.png"));
+    //public static Enemy tempenemy = new Enemy(new ImageIcon("Images/Player.png"),1,10);
     private static Vector2 mousePos = new Vector2();
 
     public static HashMap<String, Boolean> inputs = new HashMap<>();
@@ -67,7 +68,9 @@ public class Main {
                 }
             }
         });
-
+//        for(Entity e: entities){
+//            frame.add(e);
+//        }
         frame.add(player);
 
         frame.setVisible(true);
@@ -87,6 +90,7 @@ public class Main {
                             }
                         }
                     }
+
                 }
                 player.update();
             }

@@ -34,9 +34,10 @@ public class Player extends Entity {
 
     public void update(){
         updatePos();
+        super.setLocation((int)pos.x, (int)pos.y);
     }
 
     public void collide(Entity other){
-
+        System.out.println("smh imagine getting hit");
     }
 }
