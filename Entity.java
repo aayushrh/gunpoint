@@ -11,6 +11,7 @@ public abstract class Entity {
     protected Vector2 velo;
     public int collLayer;
     public int collRad;
+    public boolean death;
 
     public Entity(String path, Vector2 pos, int collLayer, int collRad) {
         loadImage(path);
@@ -39,6 +40,15 @@ public abstract class Entity {
 
     public Vector2 getPos() {
         return pos;
+    }
+
+    public void destroy(){
+        for(int i = 0; i < Board.entities.size(); i++){
+            if(Board.entities.get(i).equals(this)){
+                Board.entities.remove(i);
+                break;
+            }
+        }
     }
 
     public abstract void update();

@@ -57,4 +57,8 @@ public class Vector2 {
         vec.y = this.y * n;
         return vec;
     }
+
+    public double distTo(Vector2 other){
+        return Math.abs((this.sub(other).getMag()));
+    }
 }

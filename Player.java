@@ -12,7 +12,7 @@ public class Player extends Entity{
     private HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
     private double sped = 3.0;
     public Player() {
-        super("images/player.png", new Vector2(0, 0), 1, 50);
+        super("images/player.png", new Vector2(0, 0), 1, 25);
         inputs.put("W", false);
         inputs.put("A", false);
         inputs.put("S", false);
@@ -57,7 +57,7 @@ public class Player extends Entity{
             inputs.replace("Click", true);
         }else{
             Vector2 direction = Board.mousePos.sub(pos).normalize();
-            Bullet bullet = new Bullet(pos, direction);
+            Bullet bullet = new Bullet(pos, direction, 2);
             Board.entities.add(bullet);
         }
     }
@@ -70,7 +70,7 @@ public class Player extends Entity{
 
         if(inputs.get("Click")){
             Vector2 direction = Board.mousePos.sub(pos).normalize();
-            Bullet bullet = new Bullet(pos, direction);
+            Bullet bullet = new Bullet(pos, direction, 2);
             Board.entities.add(bullet);
         }
 
@@ -94,7 +94,7 @@ public class Player extends Entity{
     }
 
     public void collide(Entity other){
-
+        System.out.println("hit");
     }
 
 }

@@ -8,7 +8,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private final int DELAY = 25;
     private static final long serialVersionUID = 490905409104883233L;
     private Timer timer;
-    private Player player;
+    public static Player player;
     public static ArrayList<Entity> entities;
     public static Vector2 mousePos;
 
@@ -20,6 +20,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         player = new Player();
         entities = new ArrayList<Entity>();
         entities.add(player);
+        entities.add(new Enemy(new Vector2(0, 10)));
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -60,11 +61,18 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         for(int i = 0; i < entities.size(); i++){
             for(int j = i + 1; j < entities.size(); j++){
                 if(entities.get(i).collLayer == entities.get(j).collLayer){
-                    if(entities.get(i).getPos().sub(entities.get(j).getPos()).getMag() < entities.get(i).collRad + entities.get(j).collRad){
+                    if(entities.get(i).getPos().distTo(entities.get(j).getPos()) < entities.get(i).collRad + entities.get(j).collRad){
                         entities.get(i).collide(entities.get(j));
                         entities.get(j).collide(entities.get(i));
                     }
                 }
+            }
+        }
+
+        for(int i = 0; i < entities.size(); i++){
+            if(entities.get(i).death){
+                entities.remove(i);
+                i--;
             }
         }
 
