@@ -1,7 +1,7 @@
 public class Enemy extends Entity{
     private double sped = 1.0;
     public Enemy(Vector2 start){
-        super("images/player.png", start,2, 50);
+        super("images/player.png", start,new int[]{2}, 50);
     }
     public void update(){
         Player player = Board.player;

@@ -12,7 +12,7 @@ public class Player extends Entity{
     private HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
     private double sped = 3.0;
     public Player() {
-        super("images/player.png", new Vector2(0, 0), 1, 25);
+        super("images/player.png", new Vector2(0, 0), new int[]{1}, 25);
         inputs.put("W", false);
         inputs.put("A", false);
         inputs.put("S", false);

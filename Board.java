@@ -60,10 +60,12 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         }
         for(int i = 0; i < entities.size(); i++){
             for(int j = i + 1; j < entities.size(); j++){
-                if(entities.get(i).collLayer == entities.get(j).collLayer){
-                    if(entities.get(i).getPos().distTo(entities.get(j).getPos()) < entities.get(i).collRad + entities.get(j).collRad){
-                        entities.get(i).collide(entities.get(j));
-                        entities.get(j).collide(entities.get(i));
+                for (int layeri : entities.get(j).collLayer) {
+                    for (int layerj : entities.get(i).collLayer) {
+                        if (layeri == layerj && entities.get(i).getPos().distTo(entities.get(j).getPos()) < entities.get(i).collRad + entities.get(j).collRad) {
+                            entities.get(i).collide(entities.get(j));
+                            entities.get(j).collide(entities.get(i));
+                        }
                     }
                 }
             }

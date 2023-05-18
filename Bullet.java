@@ -3,7 +3,7 @@ public class Bullet extends Entity{
     public Vector2 direction;
     public Bullet(Vector2 pos, Vector2 direction, int collLayer) {
         // load the assets
-        super("images/coin.png", pos, collLayer, 10);
+        super("images/coin.png", pos, new int[]{collLayer}, 10);
         this.direction = direction;
         velo = this.direction.multiply(BULLET_SPEED);
     }

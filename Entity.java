@@ -4,20 +4,24 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public abstract class Entity {
     private BufferedImage image;
     protected Vector2 pos;
     protected Vector2 velo;
-    public int collLayer;
+    public ArrayList<Integer> collLayer;
     public int collRad;
     public boolean death;
 
-    public Entity(String path, Vector2 pos, int collLayer, int collRad) {
+    public Entity(String path, Vector2 pos, int[] collLayer, int collRad) {
         loadImage(path);
         this.pos = pos;
         this.velo = new Vector2();
-        this.collLayer = collLayer;
+        this.collLayer = new ArrayList<Integer>();
+        for(int i : collLayer){
+            this.collLayer.add(i);
+        }
         this.collRad = collRad;
     }
 
