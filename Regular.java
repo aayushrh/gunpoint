@@ -5,7 +5,7 @@ public class Regular extends Enemy{
     public void shoot(Player player){
         if(getTCD()){
             Vector2 direction = player.getPos().sub(pos).normalize();
-            Bullet bullet = new Bullet(pos, direction, 1);
+            Bullet bullet = new Bullet(pos, direction, new int[]{1});
             Board.entities.add(bullet);
             //Bullet bullet2 = new Bullet(pos, new Vector2(direction.getAngle()+0.349066), 1);
             //Board.entities.add(bullet2);

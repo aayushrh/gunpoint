@@ -17,7 +17,7 @@ public class Shield extends Enemy{
     public void shoot(Player player){
         if(getTCD()){
             Vector2 direction = player.getPos().sub(pos).normalize();
-            Bullet bullet = new Bullet(pos, direction, 1);
+            Bullet bullet = new Bullet(pos, direction, new int[]{1});
             Board.entities.add(bullet);
         }
     }

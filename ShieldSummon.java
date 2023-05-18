@@ -14,7 +14,7 @@ public class ShieldSummon extends Entity{
         
         if(followEntity==null){
             for(int i = 0; i<Board.entities.size();i++){
-                if (Board.entities.get(i).getClass().equals((new Shield(pos,1,1,0)).getClass())){
+                if (Board.entities.get(i) instanceof Shield){
                     if(((Shield)Board.entities.get(i)).getID()==ID){
                         followEntity = (Shield)Board.entities.get(i);
                     }
@@ -22,7 +22,7 @@ public class ShieldSummon extends Entity{
             }
         }
         cA = (cA+angleSpeed)%360;
-        pos = followEntity.pos.add(new Vector2(cA*3.14159265358979323/180).multiply(distance));
+        pos = followEntity.pos.add(new Vector2(cA*Math.PI/180).multiply(distance));
     }
     public void collide(Entity other){
 

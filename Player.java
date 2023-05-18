@@ -57,7 +57,7 @@ public class Player extends Entity{
             inputs.replace("Click", true);
         }else{
             Vector2 direction = Board.mousePos.sub(pos).normalize();
-            Bullet bullet = new Bullet(pos, direction, 2);
+            Bullet bullet = new Bullet(pos, direction, new int[]{2});
             Board.entities.add(bullet);
         }
     }
@@ -70,7 +70,7 @@ public class Player extends Entity{
 
         if(inputs.get("Click")){
             Vector2 direction = Board.mousePos.sub(pos).normalize();
-            Bullet bullet = new Bullet(pos, direction, 2);
+            Bullet bullet = new Bullet(pos, direction, new int[]{2});
             Board.entities.add(bullet);
         }
 
