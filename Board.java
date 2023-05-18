@@ -20,8 +20,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         player = new Player();
         entities = new ArrayList<Entity>();
         entities.add(player);
-        entities.add(new Spiral(new Vector2(0, 10), 2, 10, 5));
-        entities.add(new Spiral(new Vector2(10, 10), 2, 10, 5));
+        entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
+        entities.add(new Shield(new Vector2(10, 10), 2, 10, 2));
         timer = new Timer(DELAY, this);
         timer.start();
 

@@ -1,7 +1,7 @@
 public class Shield extends Enemy{
     private int internalID;
     private static int ID = 0;
-    public static Vector2 v;
+    public Vector2 v;
     public Shield(Vector2 start, double s, int c, int amt){
         super(start, s, c);
         v = start;
