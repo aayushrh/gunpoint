@@ -1,4 +1,4 @@
-public class Shield extends Enemy{
+public class Shield extends Enemy {
     private int internalID;
     private static int ID = 0;
     public Vector2 v;

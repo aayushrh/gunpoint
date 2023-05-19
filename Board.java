@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener, KeyListener {
@@ -21,7 +20,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         entities = new ArrayList<Entity>();
         entities.add(player);
         //entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
-        entities.add(new Spiral(new Vector2(10, 10), 2, 100, 3,69));
+        entities.add(new Spiral(new Vector2(10, 10), 2, 5, 10,2));
         timer = new Timer(DELAY, this);
         timer.start();
 
