@@ -1,11 +1,15 @@
 public class Bullet extends Entity{
-    public static final double BULLET_SPEED = 10.0;
+    private double bullet_speed;
     public Vector2 direction;
-    public Bullet(Vector2 pos, Vector2 direction, int[] collLayer) {
-        // load the assets
+
+    public Bullet(Vector2 pos, Vector2 direction, int[] collLayer, double bulletsped) {
         super("images/coin.png", pos, collLayer, 10);
-        this.direction = direction;
-        velo = this.direction.multiply(BULLET_SPEED);
+        bullet_speed = bulletsped;
+        this.direction = direction.normalize();
+        velo = this.direction.multiply(bullet_speed);
+    }
+    public Bullet(Vector2 pos, Vector2 direction, int[] collLayer) {
+        this(pos,direction,collLayer,10.0);
     }
 
     public void update(){

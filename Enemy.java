@@ -1,12 +1,10 @@
 public abstract class Enemy extends Entity{
     public double sped = 1.0;
-    public int cd = 1;
-    public int tcd;
+    public Cooldown cd;
     public Enemy(Vector2 start, double s, int c){
         super("images/player.png", start,new int[]{2}, 25);
         sped = s;
-        cd = c;
-        tcd = cd;
+        cd = new Cooldown(c);
     }
 
     public abstract void shoot(Player player);
@@ -31,14 +29,5 @@ public abstract class Enemy extends Entity{
         velo = velo.add(input.multiply(sped));
         velo = velo.multiply(0.9);
         pos = pos.add(velo);
-    }
-    public boolean getTCD(){
-        if(tcd == 0){
-            tcd = cd;
-            return true;
-        }else{
-            tcd--;
-            return false;
-        }
     }
 }

@@ -14,6 +14,7 @@ public abstract class Entity {
     public int collRad;
     public boolean death;
 
+
     public Entity(String path, Vector2 pos, int[] collLayer, int collRad) {
         loadImage(path);
         this.pos = pos;
@@ -54,7 +55,6 @@ public abstract class Entity {
             }
         }
     }
-
     public abstract void update();
     public abstract void collide(Entity other);
 }

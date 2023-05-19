@@ -10,16 +10,25 @@ import javax.imageio.ImageIO;
 
 public class Player extends Entity{
     private HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
+    private int clas;
     private double sped = 3.0;
-    public Player() {
+    private Cooldown cd;
+
+    public Player(int c) {
         super("images/player.png", new Vector2(0, 0), new int[]{1}, 25);
         inputs.put("W", false);
         inputs.put("A", false);
         inputs.put("S", false);
         inputs.put("D", false);
         inputs.put("Click", false);
+        clas = c;
+        classSetup();
+        cd = new Cooldown(50);
     }
-    
+
+    private void classSetup(){
+
+    }
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_W) {
@@ -50,6 +59,9 @@ public class Player extends Entity{
         if (key == KeyEvent.VK_A) {
             inputs.replace("A", false);
         }
+        if (key == KeyEvent.VK_SPACE) {
+            inputs.replace("SPACE", false);
+        }
     }
 
     public void click(boolean continuous){
@@ -57,21 +69,21 @@ public class Player extends Entity{
             inputs.replace("Click", true);
         }else{
             Vector2 direction = Board.mousePos.sub(pos).normalize();
-            Bullet bullet = new Bullet(pos, direction, new int[]{2});
-            Board.entities.add(bullet);
         }
     }
 
     public void release(){
         inputs.replace("Click", false);
+        cd.resetCooldown();
     }
-
     public void update() {
 
         if(inputs.get("Click")){
             Vector2 direction = Board.mousePos.sub(pos).normalize();
-            Bullet bullet = new Bullet(pos, direction, new int[]{2});
-            Board.entities.add(bullet);
+            if(cd.cd()) {
+                Bullet bullet = new Bullet(pos, direction, new int[]{2});
+                Board.entities.add(bullet);
+            }
         }
 
         Vector2 input = new Vector2();
@@ -87,6 +99,9 @@ public class Player extends Entity{
         if(inputs.get("D")){
             input = input.add(new Vector2(1, 0));
         }
+//        if(inputs.get("Space")){
+//
+//        }
         input = input.normalize();
         velo = velo.add(input.multiply(sped));
         velo = velo.multiply(0.9);

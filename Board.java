@@ -17,11 +17,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
         setBackground(new Color(232, 232, 232));
 
-        player = new Player();
+        player = new Player(1);
         entities = new ArrayList<Entity>();
         entities.add(player);
-        entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
-        entities.add(new Shield(new Vector2(10, 10), 2, 10, 2));
+        //entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
+        entities.add(new Spiral(new Vector2(10, 10), 2, 100, 3,69));
         timer = new Timer(DELAY, this);
         timer.start();
 
