@@ -4,9 +4,9 @@ public class Spiral extends Enemy{
     public int degree = 0;
     private Cooldown spiralCD;
     private int amount;
-    public Spiral(Vector2 start, double s, int c, int cooldown, int amount){
-        super(start, s, c);
-        spiralCD = new Cooldown(cooldown);
+    public Spiral(Vector2 start, double speed, int cooldown, int spiralCooldown, int amount){
+        super(start, speed, cooldown);
+        spiralCD = new Cooldown(spiralCooldown);
         this.amount = amount;
     }
     public void shoot(Player player){

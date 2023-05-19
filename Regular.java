@@ -1,6 +1,6 @@
 public class Regular extends Enemy{
-    public Regular(Vector2 start, double s, int c){
-        super(start, s, c);
+    public Regular(Vector2 start, double speed, int cooldown){
+        super(start, speed, cooldown);
     }
     public void shoot(Player player){
         if(cd.cd()){

@@ -1,8 +1,8 @@
 public class Cooldown {
     public int maxCD;
     public int cd = 0;
-    public Cooldown(int i){
-        maxCD = i;
+    public Cooldown(int maxCD){
+        this.maxCD = maxCD;
     }
     public void resetCooldown(){
         cd--;

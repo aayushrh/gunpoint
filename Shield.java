@@ -2,8 +2,8 @@ public class Shield extends Enemy{
     private int internalID;
     private static int ID = 0;
     public Vector2 v;
-    public Shield(Vector2 start, double s, int c, int amt){
-        super(start, s, c);
+    public Shield(Vector2 start, double speed, int cooldown, int amt){
+        super(start, speed, cooldown);
         v = start;
         for(int i = 0; i<amt;i++){
             ShieldSummon q = new ShieldSummon(v, ID, Math.pow(-1,i)*(amt-i), 100+Math.floor(i/3)*25);

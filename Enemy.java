@@ -1,10 +1,10 @@
 public abstract class Enemy extends Entity{
     public double sped = 1.0;
     public Cooldown cd;
-    public Enemy(Vector2 start, double s, int c){
+    public Enemy(Vector2 start, double speed, int cooldown){
         super("images/player.png", start,new int[]{2}, 25);
-        sped = s;
-        cd = new Cooldown(c);
+        sped = speed;
+        cd = new Cooldown(cooldown);
     }
 
     public abstract void shoot(Player player);
