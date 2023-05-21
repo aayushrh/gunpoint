@@ -3,6 +3,7 @@ public class Cooldown {
     public int cd = 0;
     public Cooldown(int maxCD){
         this.maxCD = maxCD;
+        this.cd = maxCD;
     }
     public void resetCooldown(){
         cd--;
