@@ -7,7 +7,7 @@ public class Rocket extends Enemy{
     public void shoot(Player player){
         if(cd.cd()){
             for(int i = 0; i < bullets; i++){
-                Vector2 offset = new Vector2(Math.random() * 50, Math.random() * 50);
+                Vector2 offset = new Vector2(Math.random() * 200, Math.random() * 200);
                 RocketBullet rocket = new RocketBullet(pos, pos.add(offset), 3, Math.PI/36);
                 Board.entities.add(rocket);
             }

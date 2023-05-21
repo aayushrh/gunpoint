@@ -21,7 +21,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         entities.add(player);
         //entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
         //entities.add(new Splash(new Vector2(10, 10), 2, 10, 100));
-        entities.add(new Rocket(new Vector2(0, 0), 2, 100, 1));
+        entities.add(new Rocket(new Vector2(0, 0), 2, 100, 5));
         timer = new Timer(DELAY, this);
         timer.start();
 
@@ -58,6 +58,15 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         for(int i = 0; i < entities.size(); i++){
             entities.get(i).update();
         }
+
+        for(int i = 0; i < entities.size(); i++) {
+            if(entities.get(i).projectile){
+                if((entities.get(i).pos.x < 0 || entities.get(i).pos.x > 823) && (entities.get(i).pos.y < 0 || entities.get(i).pos.y > 500)){
+                    entities.get(i).death = true;
+                }
+            }
+        }
+
         for(int i = 0; i < entities.size(); i++){
             for(int j = i + 1; j < entities.size(); j++){
                 for (int layeri : entities.get(j).collLayer) {

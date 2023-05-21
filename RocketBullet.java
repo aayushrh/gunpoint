@@ -25,6 +25,7 @@ public class RocketBullet extends Entity{
                 Vector2 direction = posToGo.sub(pos).normalize();
                 velo = velo.add(direction);
                 velo = velo.multiply(0.9);
+                pos = pos.add(velo);
             }
         }
         if(started){
