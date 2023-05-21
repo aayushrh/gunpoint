@@ -4,6 +4,7 @@ public class Bullet extends Entity{
 
     public Bullet(Vector2 pos, Vector2 direction, int[] collLayer, double bulletsped) {
         super("images/coin.png", pos, collLayer, 10);
+        image = scale(image, 0.5);
         this.projectile = true;
         bullet_speed = bulletsped;
         this.direction = direction.normalize();

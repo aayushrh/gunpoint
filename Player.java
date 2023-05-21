@@ -15,7 +15,7 @@ public class Player extends Entity{
     private Cooldown cd;
 
     public Player(int c) {
-        super("images/player.png", new Vector2(0, 0), new int[]{1}, 25);
+        super("images/machine_gun.png", new Vector2(0, 0), new int[]{1}, 25);
         inputs.put("W", false);
         inputs.put("A", false);
         inputs.put("S", false);
@@ -23,7 +23,7 @@ public class Player extends Entity{
         inputs.put("Click", false);
         clas = c;
         classSetup();
-        cd = new Cooldown(50);
+        cd = new Cooldown(5);
     }
 
     private void classSetup(){
@@ -77,7 +77,6 @@ public class Player extends Entity{
         cd.resetCooldown();
     }
     public void update() {
-
         if(inputs.get("Click")){
             Vector2 direction = Board.mousePos.sub(pos).normalize();
             if(cd.cd()) {
@@ -106,6 +105,14 @@ public class Player extends Entity{
         velo = velo.add(input.multiply(sped));
         velo = velo.multiply(0.9);
         pos = pos.add(velo);
+
+        double angle = Math.toDegrees(Board.mousePos.sub(pos).getAngle()) + 90;
+        loadImage("images/machine_gun.png", angle);
+        image = scale(image, 0.5);
+        //double h = image.getHeight()/Math.sin(Math.toRadians(angle));
+        //double w = image.getWidth()/Math.cos(Math.toRadians(angle));
+        //Vector2 offset = new Vector2(-(image.getWidth() - w)/2, -(image.getHeight() - h)/2);
+        //pos = pos.add(offset);
     }
 
     public void collide(Entity other){

@@ -9,7 +9,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     private Timer timer;
     public static Player player;
     public static ArrayList<Entity> entities;
-    public static Vector2 mousePos;
+    public static Vector2 mousePos = new Vector2();
 
     public Board() {
         setPreferredSize(new Dimension(50 * 18, 50 * 12));

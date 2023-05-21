@@ -12,7 +12,7 @@ public class RocketBullet extends Entity{
         this.projectile = true;
         this.posToGo = posToGo;
         this.speed = speed;
-        start = new Cooldown(120);
+        start = new Cooldown(30);
         this.turnSpeed = turnSpeed;
     }
 
