@@ -4,6 +4,7 @@ public class Bullet extends Entity{
 
     public Bullet(Vector2 pos, Vector2 direction, int[] collLayer, double bulletsped) {
         super("images/coin.png", pos, collLayer, 10);
+        this.projectile = true;
         bullet_speed = bulletsped;
         this.direction = direction.normalize();
         velo = this.direction.multiply(bullet_speed);
@@ -17,7 +18,7 @@ public class Bullet extends Entity{
     }
 
     public void collide(Entity other){
-        if(!(other instanceof Bullet)) {
+        if(!other.projectile) {
             death = true;
         }
     }

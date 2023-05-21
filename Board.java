@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Board extends JPanel implements ActionListener, KeyListener {
+public class Board extends JPanel implements ActionListener, KeyListener{
     private final int DELAY = 25;
     private static final long serialVersionUID = 490905409104883233L;
     private Timer timer;

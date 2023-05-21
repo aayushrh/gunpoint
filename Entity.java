@@ -13,7 +13,7 @@ public abstract class Entity {
     public ArrayList<Integer> collLayer;
     public int collRad;
     public boolean death;
-
+    public boolean projectile = false;
 
     public Entity(String path, Vector2 pos, int[] collLayer, int collRad) {
         loadImage(path);
@@ -26,7 +26,7 @@ public abstract class Entity {
         this.collRad = collRad;
     }
 
-    private void loadImage(String path) {
+    public void loadImage(String path) {
         try {
             image = ImageIO.read(new File(path));
         } catch (IOException exc) {
