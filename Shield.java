@@ -3,7 +3,8 @@ public class Shield extends Enemy {
     private static int ID = 0;
     public Vector2 v;
     public Shield(Vector2 start, double speed, int cooldown, int amt){
-        super(start, speed, cooldown);
+        super("images/sheild.png", start, speed, cooldown);
+        image = scale(image, 0.75);
         v = start;
         for(int i = 0; i<amt;i++){
             ShieldSummon q = new ShieldSummon(v, ID, Math.pow(-1,i)*(amt-i), 100+Math.floor(i/3)*25);

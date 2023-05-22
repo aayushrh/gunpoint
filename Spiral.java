@@ -5,7 +5,8 @@ public class Spiral extends Enemy{
     private Cooldown spiralCD;
     private int amount;
     public Spiral(Vector2 start, double speed, int cooldown, int spiralCooldown, int amount){
-        super(start, speed, cooldown);
+        super("images/spiral.png", start, speed, cooldown);
+        image = scale(image, 0.5);
         spiralCD = new Cooldown(spiralCooldown);
         this.amount = amount;
     }

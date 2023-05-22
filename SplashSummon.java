@@ -7,7 +7,8 @@ public class SplashSummon extends Entity{
     private boolean started = false;
 
     public SplashSummon(Vector2 pos, int cooldown) {
-        super("images/green-circle.png", pos, new int[]{}, 10);
+        super("images/potion.png", pos, new int[]{}, 10);
+        image = scale(image, 0.5);
         this.projectile = true;
         start = new Cooldown(cooldown);
     }
@@ -15,7 +16,7 @@ public class SplashSummon extends Entity{
     public void update(){
         if(start.cd()){
             started = true;
-            super.loadImage("images/coin.png");
+            super.loadImage("images/break.png");
             ArrayList<Integer> i = new ArrayList<Integer>();
             i.add(1);
             super.collLayer = i;

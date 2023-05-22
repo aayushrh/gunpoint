@@ -1,8 +1,8 @@
 public abstract class Enemy extends Entity{
     public double sped = 1.0;
     public Cooldown cd;
-    public Enemy(Vector2 start, double speed, int cooldown){
-        super("images/player.png", start,new int[]{2}, 25);
+    public Enemy(String path, Vector2 start, double speed, int cooldown){
+        super(path, start,new int[]{2}, 25);
         sped = speed;
         cd = new Cooldown(cooldown);
     }

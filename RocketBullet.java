@@ -8,7 +8,7 @@ public class RocketBullet extends Entity{
     private double angle;
     private double turnSpeed;
     public RocketBullet(Vector2 pos, Vector2 posToGo, int speed, double turnSpeed) {
-        super("images/coin.png", pos, new int[]{1}, 10);
+        super("images/rocketBullet.png", pos, new int[]{1}, 10);
         this.projectile = true;
         this.posToGo = posToGo;
         this.speed = speed;
@@ -39,6 +39,8 @@ public class RocketBullet extends Entity{
             velo = velo.multiply(0.9);
             pos = pos.add(velo);
         }
+        loadImage("images/rocketBullet.png", Math.toDegrees(angle) + 90);
+        image = scale(image, 0.5);
     }
 
     public void collide(Entity other){

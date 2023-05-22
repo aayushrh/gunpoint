@@ -2,7 +2,8 @@ public class Splash extends Enemy{
     Vector2 pP;
     int sc;
     public Splash(Vector2 start, double speed, int cooldown, int splashCooldown){
-        super(start, speed, cooldown);
+        super("images/splash.png", start, speed, cooldown);
+        image = scale(image, 0.5);
         sc = splashCooldown;
     }
     public void shoot(Player player){

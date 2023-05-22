@@ -5,7 +5,7 @@ public class ShieldSummon extends Entity {
     private double angleSpeed;
     private double distance;
     public ShieldSummon(Vector2 start, int ID, double angleSpeed, double dist){
-        super("images/player.png", start, new int[]{2}, 25);
+        super("images/green-circle.png", start, new int[]{2}, 25);
         this.ID = ID;
         this.angleSpeed = angleSpeed;
         distance = dist;

@@ -1,6 +1,7 @@
 public class Regular extends Enemy{
     public Regular(Vector2 start, double speed, int cooldown){
-        super(start, speed, cooldown);
+        super("images/enemy.png", start, speed, cooldown);
+        image = scale(image, 0.5);
     }
     public void shoot(Player player){
         if(cd.cd()){
