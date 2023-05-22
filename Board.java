@@ -61,7 +61,8 @@ public class Board extends JPanel implements ActionListener, KeyListener{
 
         for(int i = 0; i < entities.size(); i++) {
             if(entities.get(i).projectile){
-                if((entities.get(i).pos.x < 0 || entities.get(i).pos.x > 823) && (entities.get(i).pos.y < 0 || entities.get(i).pos.y > 500)){
+                if((entities.get(i).pos.x < -20 || entities.get(i).pos.x > 890) || (entities.get(i).pos.y < -20 || entities.get(i).pos.y > 570)){
+                    System.out.println("deaht");
                     entities.get(i).death = true;
                 }
             }
