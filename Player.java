@@ -1,16 +1,9 @@
 import java.awt.event.KeyEvent;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-import javax.imageio.ImageIO;
 
 public class Player extends Entity{
     private HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
-    private int Class;
+    private int classn;
     private String className = "<Empty>";
 
     private double sped = 3.0;
@@ -23,8 +16,8 @@ public class Player extends Entity{
     private double pv;
     private double dmg = 1;
 
-    public Player(int Class) {
-        super("images/machine_gun.png", new Vector2(0, 0), new int[]{1}, 25);
+    public Player(int classn) {
+        super("images/machine_gun.png", new Vector2(400, 250), new int[]{1}, 25);
         inputs.put("W", false);
         inputs.put("A", false);
         inputs.put("S", false);
@@ -33,15 +26,15 @@ public class Player extends Entity{
         inputs.put("SPACE",false);
         inputs.put("Q",false);
         inputs.put("E",false);
-        this.Class = Class;
+        this.classn = classn;
         pv = 5;
         classSetup();
     }
 
     private void classSetup(){
         String[] classNames = {"Sniper","Machine Gun","Original","Ninja","Summoner"};
-        className = classNames[Class];//probably display this on the top right or smth
-        switch(Class){
+        className = classNames[classn];//probably display this on the top right or smth
+        switch(classn){
             case 0:
                 cd[0].setCd(50);
                 pv = 30;
@@ -88,7 +81,7 @@ public class Player extends Entity{
         }
     }
     public void ability1(){
-        switch (Class){
+        switch (classn){
             case 1:
                 break;
             case 2:
@@ -106,7 +99,7 @@ public class Player extends Entity{
         }
     }
     public void ability2(){
-        switch (Class){
+        switch (classn){
             case 0:
                 Board.slow = .1;
                 cd[3].multCD(.25);
@@ -152,7 +145,13 @@ public class Player extends Entity{
         if(continuous) {
             inputs.replace("Click", true);
         }else{
-            Vector2 direction = Board.mousePos.sub(pos).normalize();
+            /*if(classn != 0) {
+                if(cd[0].cd()) {
+                    Vector2 direction = Board.mousePos.sub(pos).normalize();
+                    Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv);
+                    Board.entities.add(bullet);
+                }
+            }*/
         }
     }
 
@@ -162,10 +161,13 @@ public class Player extends Entity{
     public void update() {
         if(inputs.get("Click")){
             Vector2 direction = Board.mousePos.sub(pos).normalize();
-            if(cd[0].cd()) {
-                Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv);
-                if(ability1) bullet.piercing = true;
-                Board.entities.add(bullet);
+            switch (classn) {
+                case 0:
+                    if (cd[0].cd()) {
+                        Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
+                        if (ability1) bullet.piercing = true;
+                        Board.entities.add(bullet);
+                    }
             }
         }else{
             cd[0].resetCooldown();
@@ -225,7 +227,7 @@ public class Player extends Entity{
         pos = pos.add(velo);
 
         double angle = Math.toDegrees(Board.mousePos.sub(pos).getAngle()) + 90;
-        loadImage("images/machine_gun.png", angle);
+        loadImage("images/sniper.png", angle);
         image = scale(image, 0.5);
         //double h = image.getHeight()/Math.sin(Math.toRadians(angle));
         //double w = image.getWidth()/Math.cos(Math.toRadians(angle));

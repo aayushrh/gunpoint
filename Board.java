@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -12,6 +14,11 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     public static Vector2 mousePos = new Vector2();
     public static double slow = 1;
 
+    public static int level;
+    public static int civiliansC;
+    private static int civiliansN;
+    private JLabel l1;
+
     public Board() {
         setPreferredSize(new Dimension(50 * 18, 50 * 12));
 
@@ -20,9 +27,18 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         player = new Player(0);
         entities = new ArrayList<Entity>();
         entities.add(player);
-        entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
+        //entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
         //entities.add(new Splash(new Vector2(10, 10), 2, 10, 100));
         //entities.add(new Rocket(new Vector2(0, 0), 2, 100, 5));
+        //entities.add(new Civilian(new Vector2(50, -20), 2));
+        civiliansN = 1;
+        civiliansC = 0;
+        level = 1;
+        l1 =new JLabel("" + level);
+        l1.setBounds(50,50, 100,30);
+        l1.setVisible(true);
+        l1.setFont(new Font("Lato", Font.BOLD, 50));
+        add(l1);
         timer = new Timer(DELAY, this);
         timer.start();
 
@@ -89,6 +105,48 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             }
         }
 
+        int num = (int)(Math.random() * 90);
+        if(num == 1){
+            int x_val = (int)(Math.random() * 910) - 20;
+            Civilian civ = new Civilian(new Vector2(x_val, -20), 5);
+            entities.add(civ);
+        }
+
+        if(level <= 1){
+            int rand = (int)(Math.random() * 50);
+            if(num == 1){
+                int x_val = (int)(Math.random() * 910) - 20;
+                Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
+                entities.add(reg);
+            }
+        }
+        else{// if (level <= 3){
+            int rand2 = (int)(Math.random() * 3);
+            if(rand2 <= 1) {
+                int rand = (int) (Math.random() * 50);
+                if (num == 1) {
+                    int x_val = (int) (Math.random() * 910) - 20;
+                    Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
+                    entities.add(reg);
+                }
+            }else{
+                int rand = (int) (Math.random() * 50);
+                if (num == 1) {
+                    int x_val = (int) (Math.random() * 910) - 20;
+                    Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10);
+                    entities.add(spir);
+                }
+            }
+        }
+
+        if(civiliansC >= civiliansN){
+            civiliansC -= civiliansN;
+            level += 1;
+            civiliansN += 1;
+        }
+
+        l1.setText("" + level);
+
         repaint();
     }
 
@@ -119,9 +177,9 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         player.keyReleased(e);
     }
 
-    /*private void drawScore(Graphics g) {
+    private void drawScore(Graphics g) {
         // set the text to be displayed
-        String text = "$" + player.getScore();
+        String text = "$" + level;
         // we need to cast the Graphics to Graphics2D to draw nicer text
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(
@@ -134,22 +192,42 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             RenderingHints.KEY_FRACTIONALMETRICS,
             RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         // set the text color and font
+        Font font = new Font("Lato", Font.BOLD, 25);
         g2d.setColor(new Color(30, 201, 139));
-        g2d.setFont(new Font("Lato", Font.BOLD, 25));
+        g2d.setFont(font);
         // draw the score in the bottom center of the screen
         // https://stackoverflow.com/a/27740330/4655368
         FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
         // the text will be contained within this rectangle.
         // here I've sized it to be the entire bottom row of board tiles
-        Rectangle rect = new Rectangle(0, TILE_SIZE * (ROWS - 1), TILE_SIZE * COLUMNS, TILE_SIZE);
-        // determine the x coordinate for the text
+        Rectangle rect = new Rectangle(100, 50, 50, 50);
+        centerString(g, rect, text, font);
+        /*// determine the x coordinate for the text
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
         // determine the y coordinate for the text
         // (note we add the ascent, as in java 2d 0 is top of the screen)
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
         // draw the string
-        g2d.drawString(text, x, y);
-    }*/
+        g2d.drawString(text, x, y);*/
+    }
+
+    public void centerString(Graphics g, Rectangle r, String s,
+                             Font font) {
+        FontRenderContext frc =
+                new FontRenderContext(null, true, true);
+
+        Rectangle2D r2D = font.getStringBounds(s, frc);
+        int rWidth = (int) Math.round(r2D.getWidth());
+        int rHeight = (int) Math.round(r2D.getHeight());
+        int rX = (int) Math.round(r2D.getX());
+        int rY = (int) Math.round(r2D.getY());
+
+        int a = (r.width / 2) - (rWidth / 2) - rX;
+        int b = (r.height / 2) - (rHeight / 2) - rY;
+
+        g.setFont(font);
+        g.drawString(s, r.x + a, r.y + b);
+    }
 
     /*private ArrayList<Coin> populateCoins() {
         ArrayList<Coin> coinList = new ArrayList<>();

@@ -1,6 +1,6 @@
 public class Regular extends Enemy{
     public Regular(Vector2 start, double speed, int cooldown){
-        super("images/enemy.png", start, speed, cooldown);
+        super("images/enemy.png", start, speed, cooldown, 1);
         image = scale(image, 0.5);
     }
     public void shoot(Player player){
@@ -18,6 +18,11 @@ public class Regular extends Enemy{
         move(300,350);
     }
     public void collide(Entity other){
-        
+        if(other.projectile){
+            this.health -= ((Bullet)other).damage;
+            if(health < 0){
+                death = true;
+            }
+        }
     }
 }

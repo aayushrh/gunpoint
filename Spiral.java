@@ -5,7 +5,7 @@ public class Spiral extends Enemy{
     private Cooldown spiralCD;
     private int amount;
     public Spiral(Vector2 start, double speed, int cooldown, int spiralCooldown, int amount){
-        super("images/spiral.png", start, speed, cooldown);
+        super("images/spiral.png", start, speed, cooldown, 2);
         image = scale(image, 0.5);
         spiralCD = new Cooldown(spiralCooldown);
         this.amount = amount;
@@ -36,6 +36,11 @@ public class Spiral extends Enemy{
         }
     }
     public void collide(Entity other){
-
+        if(other.projectile){
+            this.health -= ((Bullet)other).damage;
+            if(health < 0){
+                death = true;
+            }
+        }
     }
 }

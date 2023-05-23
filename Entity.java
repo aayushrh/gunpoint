@@ -36,11 +36,11 @@ public abstract class Entity {
         int width = buffImage.getWidth();
         int height = buffImage.getHeight();
 
-        int nWidth = (int) Math.floor((double) width * cos + (double) height * sin);
-        int nHeight = (int) Math.floor((double) height * cos + (double) width * sin);
+        //int nWidth = (int) Math.floor((double) width * cos + (double) height * sin);
+        //int nHeight = (int) Math.floor((double) height * cos + (double) width * sin);
 
         BufferedImage rotatedImage = new BufferedImage(
-                nWidth, nHeight, BufferedImage.TYPE_INT_ARGB);
+                width, height, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D graphics = rotatedImage.createGraphics();
 
@@ -90,8 +90,8 @@ public abstract class Entity {
     public void draw(Graphics g, ImageObserver observer) {
         g.drawImage(
                 image,
-                (int)pos.x,
-                (int)pos.y,
+                (int)(pos.x - image.getWidth()/4),
+                (int)(pos.y - image.getHeight()/4),
                 observer
         );
     }

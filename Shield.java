@@ -3,7 +3,7 @@ public class Shield extends Enemy {
     private static int ID = 0;
     public Vector2 v;
     public Shield(Vector2 start, double speed, int cooldown, int amt){
-        super("images/sheild.png", start, speed, cooldown);
+        super("images/sheild.png", start, speed, cooldown, 5);
         image = scale(image, 0.75);
         v = start;
         for(int i = 0; i<amt;i++){
@@ -27,6 +27,11 @@ public class Shield extends Enemy {
         v = pos;
     }
     public void collide(Entity other){
-        
+        if(other.projectile){
+            this.health -= ((Bullet)other).damage;
+            if(health < 0){
+                death = true;
+            }
+        }
     }
 }

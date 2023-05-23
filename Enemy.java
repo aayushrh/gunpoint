@@ -1,10 +1,12 @@
 public abstract class Enemy extends Entity{
     public double sped = 1.0;
     public Cooldown cd;
-    public Enemy(String path, Vector2 start, double speed, int cooldown){
+    public int health;
+    public Enemy(String path, Vector2 start, double speed, int cooldown, int health){
         super(path, start,new int[]{2}, 25);
         sped = speed;
         cd = new Cooldown(cooldown);
+        this.health = health;
     }
 
     public abstract void shoot(Player player);

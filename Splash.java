@@ -2,7 +2,7 @@ public class Splash extends Enemy{
     Vector2 pP;
     int sc;
     public Splash(Vector2 start, double speed, int cooldown, int splashCooldown){
-        super("images/splash.png", start, speed, cooldown);
+        super("images/splash.png", start, speed, cooldown, 4);
         image = scale(image, 0.5);
         sc = splashCooldown;
     }
@@ -18,6 +18,11 @@ public class Splash extends Enemy{
         move(300,350);
     }
     public void collide(Entity other){
-
+        if(other.projectile){
+            this.health -= ((Bullet)other).damage;
+            if(health < 0){
+                death = true;
+            }
+        }
     }
 }
