@@ -21,7 +21,7 @@ public class ShieldSummon extends Entity {
                 }
             }
         }
-        cA = (cA+angleSpeed)%360;
+        cA = (cA+angleSpeed*Board.slow)%360;
         pos = followEntity.pos.add(new Vector2(cA*Math.PI/180).multiply(distance));
     }
     public void collide(Entity other){

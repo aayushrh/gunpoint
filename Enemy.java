@@ -26,7 +26,7 @@ public abstract class Enemy extends Entity{
             //pos = pos.add(direction);
         }
         input = input.normalize();
-        velo = velo.add(input.multiply(sped));
+        velo = velo.add(input.multiply(sped*Board.slow));
         velo = velo.multiply(0.9);
         pos = pos.add(velo);
     }

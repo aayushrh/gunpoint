@@ -10,13 +10,14 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     public static Player player;
     public static ArrayList<Entity> entities;
     public static Vector2 mousePos = new Vector2();
+    public static double slow = 1;
 
     public Board() {
         setPreferredSize(new Dimension(50 * 18, 50 * 12));
 
         setBackground(new Color(232, 232, 232));
 
-        player = new Player(1);
+        player = new Player(0);
         entities = new ArrayList<Entity>();
         entities.add(player);
         entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));

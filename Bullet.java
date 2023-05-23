@@ -1,6 +1,7 @@
 public class Bullet extends Entity{
     private double bullet_speed;
     public Vector2 direction;
+    public boolean piercing = false;
 
     public Bullet(Vector2 pos, Vector2 direction, int[] collLayer, double bulletsped) {
         super("images/coin.png", pos, collLayer, 10);
@@ -15,11 +16,11 @@ public class Bullet extends Entity{
     }
 
     public void update(){
-        pos = pos.add(velo);
+        pos = pos.add(velo.multiply(Board.slow));
     }
 
     public void collide(Entity other){
-        if(!other.projectile) {
+        if(!other.projectile&&!piercing) {
             death = true;
         }
     }
