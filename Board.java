@@ -35,7 +35,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         civiliansC = 0;
         level = 1;
         l1 =new JLabel("" + level);
-        l1.setBounds(50,50, 100,30);
+        l1.setBounds(50,500, 100,30);
         l1.setVisible(true);
         l1.setFont(new Font("Lato", Font.BOLD, 50));
         add(l1);

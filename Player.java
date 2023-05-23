@@ -230,10 +230,16 @@ public class Player extends Entity{
         double angle = Math.toDegrees(Board.mousePos.sub(pos).getAngle()) + 90;
         loadImage("images/sniper.png", angle);
         image = scale(image, 0.5);
+
         //double h = image.getHeight()/Math.sin(Math.toRadians(angle));
         //double w = image.getWidth()/Math.cos(Math.toRadians(angle));
         //Vector2 offset = new Vector2(-(image.getWidth() - w)/2, -(image.getHeight() - h)/2);
         //pos = pos.add(offset);
+
+        if((pos.x < -20 || pos.x > 890) || (pos.y < -20 || pos.y > 570)){
+            pos = pos.sub(velo);
+        }
+
     }
 
     public void collide(Entity other){

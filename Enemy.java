@@ -30,5 +30,10 @@ public abstract class Enemy extends Entity{
         velo = velo.add(input.multiply(sped*Board.slow));
         velo = velo.multiply(0.9);
         pos = pos.add(velo);
+
+        if((pos.x < -20 || pos.x > 890) || (pos.y < -20 || pos.y > 570)){
+            pos = pos.sub(velo);
+        }
+
     }
 }
