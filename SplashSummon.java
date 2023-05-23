@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class SplashSummon extends Entity{
 
     private Cooldown start = null;
-    private Cooldown end = null;
     private boolean started = false;
 
     public SplashSummon(Vector2 pos, int cooldown) {
@@ -11,6 +10,7 @@ public class SplashSummon extends Entity{
         image = scale(image, 0.5);
         this.projectile = true;
         start = new Cooldown(cooldown);
+        hp = 20;
     }
 
     public void update(){
@@ -20,18 +20,15 @@ public class SplashSummon extends Entity{
             ArrayList<Integer> i = new ArrayList<Integer>();
             i.add(1);
             super.collLayer = i;
-            end = new Cooldown(20);
         }
         if(started){
-            if(end.cd()){
-                death = true;
-            }
+            hp--;
         }
     }
 
     public void collide(Entity other){
         if(!other.projectile && started){
-            death = true;
+            hp = -1;
         }
     }
 }

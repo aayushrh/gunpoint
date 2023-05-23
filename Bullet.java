@@ -21,7 +21,8 @@ public class Bullet extends Entity{
         bullet_speed = bulletsped;
         this.direction = direction.normalize();
         velo = this.direction.multiply(bullet_speed);
-        this.damage = damage;
+        //this.damage = damage;
+        this.damage = 5;
     }
 
     public Bullet(Vector2 pos, Vector2 direction, int[] collLayer) {
@@ -34,7 +35,7 @@ public class Bullet extends Entity{
 
     public void collide(Entity other){
         if(!other.projectile&&!piercing) {
-            death = true;
+            hp = -1;
         }
     }
 }

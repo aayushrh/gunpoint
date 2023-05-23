@@ -19,10 +19,8 @@ public class Regular extends Enemy{
     }
     public void collide(Entity other){
         if(other.projectile){
-            this.health -= ((Bullet)other).damage;
-            if(health < 0){
-                death = true;
-            }
+            hp -= ((Bullet)other).damage;
+            System.out.println(hp+"|||||||||||||||||||||||||||||||||||");
         }
     }
 }

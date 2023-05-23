@@ -19,10 +19,7 @@ public class Splash extends Enemy{
     }
     public void collide(Entity other){
         if(other.projectile){
-            this.health -= ((Bullet)other).damage;
-            if(health < 0){
-                death = true;
-            }
+            this.hp -= ((Bullet)other).damage;
         }
     }
 }

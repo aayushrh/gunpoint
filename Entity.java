@@ -14,7 +14,7 @@ public abstract class Entity {
     protected Vector2 velo;
     public ArrayList<Integer> collLayer;
     public int collRad;
-    public boolean death;
+    public double hp = 1;
     public boolean projectile = false;
 
     public Entity(String path, Vector2 pos, int[] collLayer, int collRad) {

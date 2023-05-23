@@ -45,7 +45,7 @@ public class RocketBullet extends Entity{
 
     public void collide(Entity other){
         if(!other.projectile){
-            death = true;
+            hp = 0;
         }
     }
 }

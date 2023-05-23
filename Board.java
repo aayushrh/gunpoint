@@ -80,7 +80,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             if(entities.get(i).projectile){
                 if((entities.get(i).pos.x < -20 || entities.get(i).pos.x > 890) || (entities.get(i).pos.y < -20 || entities.get(i).pos.y > 570)){
                     System.out.println("deaht");
-                    entities.get(i).death = true;
+                    entities.get(i).hp = -1;
                 }
             }
         }
@@ -99,13 +99,15 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         }
 
         for(int i = 0; i < entities.size(); i++){
-            if(entities.get(i).death){
+            if(entities.get(i).hp<=0){
                 entities.remove(i);
                 i--;
+            }else{
+                System.out.println(entities.get(i).hp);
             }
         }
 
-        int num = (int)(Math.random() * 90);
+        int num = (int)(Math.random() * 90/slow);
         if(num == 1){
             int x_val = (int)(Math.random() * 910) - 20;
             Civilian civ = new Civilian(new Vector2(x_val, -20), 5);
@@ -113,7 +115,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         }
 
         if(level <= 1){
-            int rand = (int)(Math.random() * 50);
+            int rand = (int)(Math.random() * 50/slow);
             if(num == 1){
                 int x_val = (int)(Math.random() * 910) - 20;
                 Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
@@ -121,16 +123,16 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             }
         }
         else{// if (level <= 3){
-            int rand2 = (int)(Math.random() * 3);
+            int rand2 = (int)(Math.random() * 3/slow);
             if(rand2 <= 1) {
-                int rand = (int) (Math.random() * 50);
+                int rand = (int) (Math.random() * 50/slow);
                 if (num == 1) {
                     int x_val = (int) (Math.random() * 910) - 20;
                     Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
                     entities.add(reg);
                 }
             }else{
-                int rand = (int) (Math.random() * 50);
+                int rand = (int) (Math.random() * 50/slow);
                 if (num == 1) {
                     int x_val = (int) (Math.random() * 910) - 20;
                     Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10);

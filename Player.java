@@ -27,6 +27,7 @@ public class Player extends Entity{
         inputs.put("Q",false);
         inputs.put("E",false);
         this.classn = classn;
+        hp = 10;
         pv = 5;
         classSetup();
     }
@@ -237,6 +238,7 @@ public class Player extends Entity{
 
     public void collide(Entity other){
         System.out.println("hit");
+        hp--;
     }
 
 }
