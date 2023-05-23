@@ -8,6 +8,7 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener, KeyListener{
     private final int DELAY = 25;
     private static final long serialVersionUID = 490905409104883233L;
+
     private Timer timer;
     public static Player player;
     public static ArrayList<Entity> entities;
@@ -78,7 +79,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
 
         for(int i = 0; i < entities.size(); i++) {
             if(entities.get(i).projectile){
-                if((entities.get(i).pos.x < -20 || entities.get(i).pos.x > 890) || (entities.get(i).pos.y < -20 || entities.get(i).pos.y > 570)){
+                if((outOfBounds(entities.get(i).pos))){
                     System.out.println("deaht");
                     entities.get(i).hp = -1;
                 }
@@ -178,7 +179,9 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         // react to key up events
         player.keyReleased(e);
     }
-
+    public static boolean outOfBounds(Vector2 pos){
+        return (pos.x < 40 || pos.x > 890) || (pos.y < -20 || pos.y > 570);
+    }
     private void drawScore(Graphics g) {
         // set the text to be displayed
         String text = "$" + level;

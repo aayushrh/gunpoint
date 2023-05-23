@@ -236,7 +236,7 @@ public class Player extends Entity{
         //Vector2 offset = new Vector2(-(image.getWidth() - w)/2, -(image.getHeight() - h)/2);
         //pos = pos.add(offset);
 
-        if((pos.x < -20 || pos.x > 890) || (pos.y < -20 || pos.y > 570)){
+        if(Board.outOfBounds(pos)){
             pos = pos.sub(velo);
         }
 
