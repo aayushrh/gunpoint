@@ -3,12 +3,12 @@ import java.util.HashMap;
 
 public class Player extends Entity{
     private HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
-    private int classn;
+    public int classn;
     private String className = "<Empty>";
 
     private double sped = 1.5;
-    private boolean ability1 = false;
-    private boolean ability2 = false;
+    public boolean ability1 = false;
+    public boolean ability2 = false;
     private double spread = 0;
     private double maxSpread = 0;
     private Vector2 dash = null;
@@ -34,7 +34,6 @@ public class Player extends Entity{
         inputs.put("Q",false);
         inputs.put("E",false);
         hp = 10;
-        pv = 5;
     }
 
     private void classSetup(){

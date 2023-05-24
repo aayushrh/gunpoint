@@ -144,7 +144,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                     int rand = (int) (Math.random() * 50 / slow);
                     if (num == 1) {
                         int x_val = (int) (Math.random() * 910) - 20;
-                        Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10);
+                        Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10,1);
                         entities.add(spir);
                     }
                 }

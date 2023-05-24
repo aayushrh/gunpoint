@@ -33,8 +33,9 @@ public class Spiral extends Enemy{
             }
             if(spiralCD.cd()) {
                 for(int i = 0; i<amount;i++) {
-                    Bullet bullet = new Bullet(pos, new Vector2(Math.toRadians(degree+360*i/amount)), new int[]{1}, 5);
+                    Bullet bullet = new Bullet(pos, new Vector2(Math.toRadians(degree+360.0*i/amount)).normalize(), new int[]{1}, 5);
                     Board.entities.add(bullet);
+                    System.out.println(i);
                 }
             }
 

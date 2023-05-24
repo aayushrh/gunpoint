@@ -1,19 +1,16 @@
 import java.util.Arrays;
 
 public class Bullet extends Entity{
-    private double bullet_speed;
     public Vector2 direction;
     public boolean piercing = false;
-    public int damage;
 
     public Bullet(Vector2 pos, Vector2 direction, int[] collLayer, double bulletsped) {
         super("images/player_bullet.png", pos, collLayer, 10);
         image = scale(image, 0.5);
         this.projectile = true;
-        bullet_speed = bulletsped;
         this.direction = direction.normalize();
-        velo = this.direction.multiply(bullet_speed);
-        this.damage = 1;
+        velo = this.direction.multiply(bulletsped);
+        hp = 1;
         if(Arrays.equals(collLayer, new int[]{1})){
             loadImage("images/enemy_bullet.png");
             //image = scale(image, 2);
@@ -28,11 +25,9 @@ public class Bullet extends Entity{
         super("images/coin.png", pos, collLayer, 10);
         image = scale(image, 0.5);
         this.projectile = true;
-        bullet_speed = bulletsped;
         this.direction = direction.normalize();
-        velo = this.direction.multiply(bullet_speed);
-        //this.damage = damage;
-        this.damage = 5;
+        velo = this.direction.multiply(bulletsped);
+        hp = damage;
         if(Arrays.equals(collLayer, new int[]{1})){
             loadImage("images/enemy_bullet.png");
             //image = scale(image, 2);
@@ -51,8 +46,17 @@ public class Bullet extends Entity{
     }
 
     public void collide(Entity other){
-        if(!other.projectile&&!piercing) {
-            hp = -1;
+        if(other instanceof Player){
+            if(((Player)other).ability2&&((Player)other).classn==1){
+                return;
+            }
+            hp=-1;
+        }else if(!other.projectile){
+            double t = other.hp;
+            other.hp-=hp;
+            if(!piercing) {
+                hp -= t;
+            }
         }
     }
 }

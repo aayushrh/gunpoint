@@ -7,6 +7,8 @@ public class JetpackDmg extends Entity{
         pos = Board.player.pos;
     }
     public void collide(Entity other){
-
+        if(other instanceof Enemy) {
+            other.hp -= 1;
+        }
     }
 }
