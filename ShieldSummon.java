@@ -3,12 +3,20 @@ public class ShieldSummon extends Entity {
     private int ID;
     private double cA;
     private double angleSpeed;
+    private int layer;
+    private int layerID;
     private double distance;
-    public ShieldSummon(Vector2 start, int ID, double angleSpeed, double dist){
+    public ShieldSummon(Vector2 start, int ID,int layerNum, double angleSpeed, int totalLayerNum){
         super("images/green-circle.png", start, new int[]{2}, 25);
+        hp = 1;
         this.ID = ID;
-        this.angleSpeed = angleSpeed;
-        distance = dist;
+        if(totalLayerNum%2!=0){
+            this.angleSpeed = -angleSpeed;
+        }else{
+            this.angleSpeed = angleSpeed;
+        }
+        distance = totalLayerNum*25;
+        cA = layerNum*360.0/totalLayerNum;
     }
     public void update(){
         
@@ -22,9 +30,14 @@ public class ShieldSummon extends Entity {
             }
         }
         cA = (cA+angleSpeed*Board.slow)%360;
-        pos = followEntity.pos.add(new Vector2(cA*Math.PI/180).multiply(distance));
+        pos = followEntity.pos.add(new Vector2(Math.toRadians(cA)).multiply(distance));
+        if(followEntity.hp<=0){
+            hp=-1;
+        }
     }
     public void collide(Entity other){
-
+//        if(other.projectile){
+//            this.hp -= other.hp;
+//        }
     }
 }

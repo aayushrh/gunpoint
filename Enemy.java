@@ -36,8 +36,8 @@ public abstract class Enemy extends Entity{
         }
     }
     public void collide(Entity other){
-        if(other.projectile){
-            this.hp -= ((Bullet)other).damage;
-        }
+//        if(other.projectile){
+//            this.hp -= other.hp;
+//        }
     }
 }
