@@ -34,6 +34,10 @@ public abstract class Enemy extends Entity{
         if((pos.x < -20 || pos.x > 890) || (pos.y < -20 || pos.y > 570)){
             pos = pos.sub(velo);
         }
-
+    }
+    public void collide(Entity other){
+        if(other.projectile){
+            this.hp -= ((Bullet)other).damage;
+        }
     }
 }

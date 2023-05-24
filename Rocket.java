@@ -17,9 +17,4 @@ public class Rocket extends Enemy{
     public void update(){
         move(300,350);
     }
-    public void collide(Entity other){
-        if(other.projectile){
-            hp -= ((Bullet)other).damage;
-        }
-    }
 }

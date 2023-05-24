@@ -26,7 +26,7 @@ public class Bullet extends Entity{
     }
 
     public Bullet(Vector2 pos, Vector2 direction, int[] collLayer) {
-        this(pos,direction,collLayer,10.0);
+        this(pos,direction,collLayer,15.0);
     }
 
     public void update(){

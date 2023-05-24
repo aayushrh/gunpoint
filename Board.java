@@ -103,8 +103,6 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             if(entities.get(i).hp<=0){
                 entities.remove(i);
                 i--;
-            }else{
-                System.out.println(entities.get(i).hp);
             }
         }
 

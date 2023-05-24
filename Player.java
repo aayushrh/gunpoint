@@ -6,13 +6,15 @@ public class Player extends Entity{
     private int classn;
     private String className = "<Empty>";
 
-    private double sped = 3.0;
+    private double sped = 1.5;
     private boolean ability1 = false;
     private boolean ability2 = false;
-
+    private double spread = 0;
+    private double maxSpread = 0;
+    private Vector2 dash = null;
 
     private Cooldown[] cd = {new Cooldown(10),new Cooldown(100), new Cooldown(200), new Cooldown(400)};
-    //0 = atk, 1 = dash, 2 = 1st ability(uptime), 3 = 2nd ability(uptime);
+    //0 = atk, 1 = dash, 2 = 1st ability(uptime), 3 = 2nd ability(uptime).
     private double pv;
     private double dmg = 1;
 
@@ -35,16 +37,19 @@ public class Player extends Entity{
     private void classSetup(){
         String[] classNames = {"Sniper","Machine Gun","Original","Ninja","Summoner"};
         className = classNames[classn];//probably display this on the top right or smth
+        cd[1].cd = 0;
         switch(classn){
             case 0:
                 cd[0].setCd(50);
                 pv = 30;
-                sped = 1.5;
+                sped *= .5;
                 dmg = 5;
                 break;
             case 1:
                 cd[0].setCd(5);
                 dmg = .5;
+                sped *= 2;
+                maxSpread = 80;
                 break;
             case 2:
                 break;
@@ -84,6 +89,10 @@ public class Player extends Entity{
     public void ability1(){
         switch (classn){
             case 1:
+                cd[0].multCD(.5);
+                ability1 = true;
+                cd[2].multCD(.5);
+                cd[2].cd();
                 break;
             case 2:
                 break;
@@ -103,11 +112,14 @@ public class Player extends Entity{
         switch (classn){
             case 0:
                 Board.slow = .1;
+                ability2 = true;
                 cd[3].multCD(.25);
                 cd[3].cd();
-                ability2 = true;
-                break;
             case 1:
+                sped *= .5;
+                ability2 = true;
+                cd[3].multCD(.25);
+                cd[3].cd();
                 break;
             case 2:
                 break;
@@ -161,26 +173,39 @@ public class Player extends Entity{
     }
     public void update() {
         if(inputs.get("Click")){
-            Vector2 direction = Board.mousePos.sub(pos).normalize();
+            System.out.println("Sus");
+            Vector2 direction = new Vector2(Math.toRadians(Math.toDegrees(Board.mousePos.sub(pos).getAngle())+Math.random()*spread-spread/2));
             switch (classn) {
-                case 0:
+                default:
                     if (cd[0].cd()) {
                         Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
                         if (ability1) bullet.piercing = true;
                         Board.entities.add(bullet);
+                        if(spread<maxSpread){
+                            spread+=(maxSpread-spread)*.005;
+                        }
                     }
             }
         }else{
+            if(spread>0){
+                spread*=.95;
+                if(spread<maxSpread*.001){
+                    spread = 0;
+                }
+            }
             cd[0].resetCooldown();
         }
         if(cd[2].getCd()){
-            if(inputs.get("Q")) {
-                ability1();
+            if(Board.level>7&&inputs.get("Q")) {
+                ability2();
             }
         }else if(ability1){
             cd[2].resetCooldown();
             if(cd[2].getCd()){
                 ability1=false;
+                if(classn==1){
+                    cd[0].multCD(.5);
+                }
                 cd[2].multCD(2);
                 cd[2].cd();
             }
@@ -189,14 +214,21 @@ public class Player extends Entity{
         }
 
         if(cd[3].getCd()){
-            if(inputs.get("E")) {
-                ability2();
+            if(Board.level>2&&inputs.get("E")) {
+                ability1();
             }
         }else if(ability2){
             cd[3].resetCooldown();
             if(cd[3].getCd()){
                 ability2=false;
-                Board.slow = 1;
+                switch(classn) {
+                    case 0:
+                        Board.slow = 1;
+                        break;
+                    case 1:
+                        sped *=2;
+                        break;
+                }
                 for(Entity e: Board.entities){
                     e.velo.multiply(Board.slow);
                 }
@@ -219,11 +251,22 @@ public class Player extends Entity{
         if(inputs.get("D")){
             input = input.add(new Vector2(1, 0));
         }
+        if(inputs.get("SPACE")&&cd[1].getCd()){
+            if(dash==null) dash = input.normalize().multiply(50);
+            cd[1].cd();
+        }else{
+            cd[1].resetCooldown();
+        }
 //        if(inputs.get("Space")){
 //
 //        }
         input = input.normalize();
-        velo = velo.add(input.multiply(sped*Board.slow));
+        if(dash!=null){
+            velo = dash;
+            dash = null;
+        }else {
+            velo = velo.add(input.multiply(sped * Board.slow));
+        }
         velo = velo.multiply(0.9);
         pos = pos.add(velo);
 
@@ -244,7 +287,9 @@ public class Player extends Entity{
 
     public void collide(Entity other){
         System.out.println("hit");
-        hp--;
+        if(!ability2||classn!=1) {
+            hp--;
+        }
     }
 
 }

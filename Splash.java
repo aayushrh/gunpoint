@@ -17,9 +17,4 @@ public class Splash extends Enemy{
     public void update(){
         move(300,350);
     }
-    public void collide(Entity other){
-        if(other.projectile){
-            this.hp -= ((Bullet)other).damage;
-        }
-    }
 }

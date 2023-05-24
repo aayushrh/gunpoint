@@ -35,9 +35,4 @@ public class Spiral extends Enemy{
 
         }
     }
-    public void collide(Entity other){
-        if(other.projectile){
-            hp -= ((Bullet)other).damage;
-        }
-    }
 }

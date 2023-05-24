@@ -26,9 +26,4 @@ public class Shield extends Enemy {
         move(300,350);
         v = pos;
     }
-    public void collide(Entity other){
-        if(other.projectile){
-            hp -= ((Bullet)other).damage;
-        }
-    }
 }
