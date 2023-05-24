@@ -204,8 +204,14 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             player.keyReleased(e);
         }
     }
+    public static boolean outOfBoundsX(Vector2 pos){
+        return (pos.x < 40 || pos.x > 890);
+    }
+    public static boolean outOfBoundsY(Vector2 pos){
+        return (pos.y < -20 || pos.y > 570);
+    }
     public static boolean outOfBounds(Vector2 pos){
-        return (pos.x < 40 || pos.x > 890) || (pos.y < -20 || pos.y > 570);
+        return  outOfBoundsX(pos)||outOfBoundsY(pos);
     }
 
     /*private ArrayList<Coin> populateCoins() {
