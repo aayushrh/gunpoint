@@ -28,7 +28,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         player = new Player(0);
         entities = new ArrayList<Entity>();
         entities.add(player);
-        //entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
+        entities.add(new Shield(new Vector2(0, 10), 2, 10, 100, 1, 1));
         //entities.add(new Splash(new Vector2(10, 10), 2, 10, 100));
         //entities.add(new Rocket(new Vector2(0, 0), 2, 100, 5));
         //entities.add(new Civilian(new Vector2(50, -20), 2));
@@ -113,28 +113,40 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             entities.add(civ);
         }
 
-        if(level <= 1){
-            int rand = (int)(Math.random() * 50/slow);
-            if(num == 1){
+        if(level >= 1){
+            int rand = (int)(Math.random() * 100/slow);
+            if(rand == 1){
                 int x_val = (int)(Math.random() * 910) - 20;
                 Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
                 entities.add(reg);
             }
         }
-        else{// if (level <= 3){
-            int rand2 = (int)(Math.random() * 3/slow);
-            if(rand2 <= 1) {
-                int rand = (int) (Math.random() * 50/slow);
-                if (num == 1) {
+        if (level >= 3){
+            int rand2 = (int)(Math.random() * 3);
+            if(rand2 > 1) {
+                int rand = (int) (Math.random() * 100 / slow);
+                if (rand == 1) {
                     int x_val = (int) (Math.random() * 910) - 20;
-                    Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
-                    entities.add(reg);
+                    Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10, 5);
+                    entities.add(spir);
                 }
-            }else{
-                int rand = (int) (Math.random() * 50/slow);
-                if (num == 1) {
+            }
+        }
+        if(level>=5){
+            int rand = (int) (Math.random()*150/slow);
+            if(rand==1){
+                int x_val = (int) (Math.random() * 910) - 20;
+                Shield sheld = new Shield(new Vector2(x_val, -20), 2, 100, (int)Math.floor((double)level/2),1,3);
+                entities.add(sheld);
+            }
+        }
+        if(level >= 10){
+            int rand2 = (int)(Math.random() * 5);
+            if(rand2 <= 1) {
+                int rand = (int) (Math.random() * 1500 / slow);
+                if (rand == 1) {
                     int x_val = (int) (Math.random() * 910) - 20;
-                    Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10);
+                    Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 3, 4, 1);
                     entities.add(spir);
                 }
             }
