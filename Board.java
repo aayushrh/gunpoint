@@ -129,7 +129,8 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             } else if (level <= 4){
                 int rand2 = (int) (Math.random() * 3 / slow);
                 if (rand2 <= 1) {
-                    spawn(new Regular(new Vector2(0, -20), 2, 25), 90);
+                    //spawn(new Regular(new Vector2(0, -20), 2, 25), 90);
+                    spawn(new Shield(new Vector2(1,1),1,100,1+level/10,1,1),90);
                 } else {
                     spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
                 }

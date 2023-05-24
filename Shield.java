@@ -1,6 +1,4 @@
 public class Shield extends Enemy {
-    private int internalID;
-    private static int ID = 0;
     public Vector2 v;
     public Shield(Vector2 start, double speed, int cooldown, int amt, double angleSpeed, int startLayer){
         super("images/sheild.png", start, speed, cooldown, 5);
@@ -10,7 +8,7 @@ public class Shield extends Enemy {
         int t = 0;
         double offset = Math.random();
         for(int i = 1; i<=amt;i++){
-            ShieldSummon q = new ShieldSummon(v, ID, i-t, offset*angleSpeed*c, c);
+            ShieldSummon q = new ShieldSummon(v, this, i-t, offset*angleSpeed*c, c);
             Board.entities.add(q);
             if(i-t==c){
                 t+=c;
@@ -18,10 +16,6 @@ public class Shield extends Enemy {
                 offset = Math.random();
             }
         }
-        internalID = ID++;
-    }
-    public int getID(){
-        return internalID;
     }
     public void shoot(Player player){
         if(cd.cd()){
