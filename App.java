@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class sApp {
+class App {
     private static void initWindow() {
         JFrame window = new JFrame("Can't Stop, Won't Stop, GameStop");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

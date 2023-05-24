@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -14,31 +12,33 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     public static ArrayList<Entity> entities;
     public static Vector2 mousePos = new Vector2();
     public static double slow = 1;
+    public static int pClassn = 0;
 
     public static int level;
     public static int civiliansC;
     private static int civiliansN;
     private JLabel l1;
+    private ClassSelection cselect;
+    private TitleScreen title;
 
     public Board() {
         setPreferredSize(new Dimension(50 * 18, 50 * 12));
 
-        setBackground(new Color(232, 232, 232));
+        setBackground(new Color(0, 0, 0));
 
-        player = new Player(0);
+        //player = new Player(0);
         entities = new ArrayList<Entity>();
-        entities.add(player);
-        //entities.add(new Shield(new Vector2(0, 10), 2, 10, 2));
-        //entities.add(new Splash(new Vector2(10, 10), 2, 10, 100));
-        //entities.add(new Rocket(new Vector2(0, 0), 2, 100, 5));
-        //entities.add(new Civilian(new Vector2(50, -20), 2));
+        title = new TitleScreen();
+        entities.add(title);
+        //entities.add(player);
         civiliansN = 1;
         civiliansC = 0;
         level = 1;
         l1 =new JLabel("" + level);
         l1.setBounds(50,500, 100,30);
-        l1.setVisible(true);
+        l1.setVisible(false);
         l1.setFont(new Font("Lato", Font.BOLD, 50));
+        l1.setForeground(new Color(255, 255, 255));
         add(l1);
         timer = new Timer(DELAY, this);
         timer.start();
@@ -80,7 +80,6 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         for(int i = 0; i < entities.size(); i++) {
             if(entities.get(i).projectile){
                 if((outOfBounds(entities.get(i).pos))){
-                    System.out.println("deaht");
                     entities.get(i).hp = -1;
                 }
             }
@@ -101,52 +100,64 @@ public class Board extends JPanel implements ActionListener, KeyListener{
 
         for(int i = 0; i < entities.size(); i++){
             if(entities.get(i).hp<=0){
+                if(entities.get(i) instanceof ClassSelection){
+                    pClassn = ((ClassSelection)entities.get(i)).classn;
+                    player = new Player(pClassn);
+                    entities.add(player);
+                    cselect = null;
+                    l1.setVisible(true);
+                }
+                if(entities.get(i) instanceof TitleScreen){
+                    cselect = new ClassSelection();
+                    entities.add(cselect);
+                    title = null;
+                }
                 entities.remove(i);
                 i--;
             }
         }
-
-        int num = (int)(Math.random() * 90/slow);
-        if(num == 1){
-            int x_val = (int)(Math.random() * 910) - 20;
-            Civilian civ = new Civilian(new Vector2(x_val, -20), 5);
-            entities.add(civ);
-        }
-
-        if(level <= 1){
-            int rand = (int)(Math.random() * 50/slow);
-            if(num == 1){
-                int x_val = (int)(Math.random() * 910) - 20;
-                Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
-                entities.add(reg);
+        if(player != null) {
+            int num = (int) (Math.random() * 90 / slow);
+            if (num == 1) {
+                int x_val = (int) (Math.random() * 910) - 20;
+                Civilian civ = new Civilian(new Vector2(x_val, -20), 5);
+                entities.add(civ);
             }
-        }
-        else{// if (level <= 3){
-            int rand2 = (int)(Math.random() * 3/slow);
-            if(rand2 <= 1) {
-                int rand = (int) (Math.random() * 50/slow);
+
+            if (level <= 1) {
+                int rand = (int) (Math.random() * 50 / slow);
                 if (num == 1) {
                     int x_val = (int) (Math.random() * 910) - 20;
                     Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
                     entities.add(reg);
                 }
-            }else{
-                int rand = (int) (Math.random() * 50/slow);
-                if (num == 1) {
-                    int x_val = (int) (Math.random() * 910) - 20;
-                    Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10);
-                    entities.add(spir);
+            } else {// if (level <= 3){
+                int rand2 = (int) (Math.random() * 3 / slow);
+                if (rand2 <= 1) {
+                    int rand = (int) (Math.random() * 50 / slow);
+                    if (num == 1) {
+                        int x_val = (int) (Math.random() * 910) - 20;
+                        Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
+                        entities.add(reg);
+                    }
+                } else {
+                    int rand = (int) (Math.random() * 50 / slow);
+                    if (num == 1) {
+                        int x_val = (int) (Math.random() * 910) - 20;
+                        Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10);
+                        entities.add(spir);
+                    }
                 }
             }
-        }
 
-        if(civiliansC >= civiliansN){
-            civiliansC -= civiliansN;
-            level += 1;
-            civiliansN += 1;
-        }
+            if (civiliansC >= civiliansN) {
+                civiliansC -= civiliansN;
+                level += 1;
+                civiliansN += 1;
+            }
 
-        l1.setText("" + level);
+            l1.setText("" + level);
+        }
 
         repaint();
     }
@@ -169,67 +180,32 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         // react to key down events
-        player.keyPressed(e);
+        if(title != null){
+            title.keyPressed(e);
+        }
+        if(cselect != null){
+            cselect.keyPressed(e);
+        }
+        if(player != null) {
+            player.keyPressed(e);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         // react to key up events
-        player.keyReleased(e);
+        if(title != null){
+            title.keyReleased(e);
+        }
+        if(cselect != null){
+            cselect.keyReleased(e);
+        }
+        if(player != null) {
+            player.keyReleased(e);
+        }
     }
     public static boolean outOfBounds(Vector2 pos){
         return (pos.x < 40 || pos.x > 890) || (pos.y < -20 || pos.y > 570);
-    }
-    private void drawScore(Graphics g) {
-        // set the text to be displayed
-        String text = "$" + level;
-        // we need to cast the Graphics to Graphics2D to draw nicer text
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(
-            RenderingHints.KEY_TEXT_ANTIALIASING,
-            RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2d.setRenderingHint(
-            RenderingHints.KEY_RENDERING,
-            RenderingHints.VALUE_RENDER_QUALITY);
-        g2d.setRenderingHint(
-            RenderingHints.KEY_FRACTIONALMETRICS,
-            RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-        // set the text color and font
-        Font font = new Font("Lato", Font.BOLD, 25);
-        g2d.setColor(new Color(30, 201, 139));
-        g2d.setFont(font);
-        // draw the score in the bottom center of the screen
-        // https://stackoverflow.com/a/27740330/4655368
-        FontMetrics metrics = g2d.getFontMetrics(g2d.getFont());
-        // the text will be contained within this rectangle.
-        // here I've sized it to be the entire bottom row of board tiles
-        Rectangle rect = new Rectangle(100, 50, 50, 50);
-        centerString(g, rect, text, font);
-        /*// determine the x coordinate for the text
-        int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
-        // determine the y coordinate for the text
-        // (note we add the ascent, as in java 2d 0 is top of the screen)
-        int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-        // draw the string
-        g2d.drawString(text, x, y);*/
-    }
-
-    public void centerString(Graphics g, Rectangle r, String s,
-                             Font font) {
-        FontRenderContext frc =
-                new FontRenderContext(null, true, true);
-
-        Rectangle2D r2D = font.getStringBounds(s, frc);
-        int rWidth = (int) Math.round(r2D.getWidth());
-        int rHeight = (int) Math.round(r2D.getHeight());
-        int rX = (int) Math.round(r2D.getX());
-        int rY = (int) Math.round(r2D.getY());
-
-        int a = (r.width / 2) - (rWidth / 2) - rX;
-        int b = (r.height / 2) - (rHeight / 2) - rY;
-
-        g.setFont(font);
-        g.drawString(s, r.x + a, r.y + b);
     }
 
     /*private ArrayList<Coin> populateCoins() {

@@ -19,7 +19,12 @@ public class Player extends Entity{
     private double dmg = 1;
 
     public Player(int classn) {
-        super("images/machine_gun.png", new Vector2(400, 250), new int[]{1}, 25);
+        super("images/players/ninja.png", new Vector2(400, 250), new int[]{1}, 25);
+        this.classn = classn;
+        classSetup();
+        System.out.println(className);
+        loadImage("images/players/" + className + ".png");
+        image = scale(image, 0.75);
         inputs.put("W", false);
         inputs.put("A", false);
         inputs.put("S", false);
@@ -28,14 +33,12 @@ public class Player extends Entity{
         inputs.put("SPACE",false);
         inputs.put("Q",false);
         inputs.put("E",false);
-        this.classn = classn;
         hp = 10;
         pv = 5;
-        classSetup();
     }
 
     private void classSetup(){
-        String[] classNames = {"Sniper","Machine Gun","Original","Ninja","Summoner"};
+        String[] classNames = {"sniper","machine_gun","classic","ninja","summoner"};
         className = classNames[classn];//probably display this on the top right or smth
         cd[1].cd = 0;
         switch(classn){
@@ -59,8 +62,8 @@ public class Player extends Entity{
             case 4:
                 cd[0].setCd(-1);
                 break;
-
         }
+        loadImage("images/players/" + className + ".png");
     }
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -173,7 +176,6 @@ public class Player extends Entity{
     }
     public void update() {
         if(inputs.get("Click")){
-            System.out.println("Sus");
             Vector2 direction = new Vector2(Math.toRadians(Math.toDegrees(Board.mousePos.sub(pos).getAngle())+Math.random()*spread-spread/2));
             switch (classn) {
                 default:
@@ -271,7 +273,7 @@ public class Player extends Entity{
         pos = pos.add(velo);
 
         double angle = Math.toDegrees(Board.mousePos.sub(pos).getAngle()) + 90;
-        loadImage("images/sniper.png", angle);
+        loadImage("images/players/" + className + ".png", angle);
         image = scale(image, 0.5);
 
         //double h = image.getHeight()/Math.sin(Math.toRadians(angle));
