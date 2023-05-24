@@ -117,7 +117,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             }
         }
         if(player != null) {
-            int num = (int) (Math.random() * 90 / slow);
+            int num = (int) (Math.random() * 500 / slow);
             if (num == 1) {
                 int x_val = (int) (Math.random() * 910) - 20;
                 Civilian civ = new Civilian(new Vector2(x_val, -20), 5);
@@ -125,30 +125,49 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             }
 
             if (level <= 1) {
-                int rand = (int) (Math.random() * 50 / slow);
-                if (num == 1) {
-                    int x_val = (int) (Math.random() * 910) - 20;
-                    Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
-                    entities.add(reg);
-                }
-            } else {// if (level <= 3){
+                spawn(new Regular(new Vector2(0, -20), 2, 25), 90);
+            } else if (level <= 4){
                 int rand2 = (int) (Math.random() * 3 / slow);
                 if (rand2 <= 1) {
-                    int rand = (int) (Math.random() * 50 / slow);
-                    if (num == 1) {
-                        int x_val = (int) (Math.random() * 910) - 20;
-                        Regular reg = new Regular(new Vector2(x_val, -20), 2, 25);
-                        entities.add(reg);
-                    }
+                    spawn(new Regular(new Vector2(0, -20), 2, 25), 90);
                 } else {
-                    int rand = (int) (Math.random() * 50 / slow);
-                    if (num == 1) {
-                        int x_val = (int) (Math.random() * 910) - 20;
-                        Spiral spir = new Spiral(new Vector2(x_val, -20), 2, 100, 25, 10,1);
-                        entities.add(spir);
-                    }
+                    spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
+                }
+            } else if (level <= 7){
+                int rand2 = (int) (Math.random() * 8 / slow);
+                if (rand2 <= 1) {
+                    spawn(new Regular(new Vector2(0, -20), 2, 25), 90);
+                } else if (rand2 <= 4) {
+                    spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
+                } else{
+                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, Math.PI/36, 3), 90);
+                }
+            } else if (level <= 11){
+                int rand2 = (int) (Math.random() * 12 / slow);
+                if (rand2 <= 1) {
+                    spawn(new Regular(new Vector2(0, -20), 2, 25), 90);
+                } else if (rand2 <= 4) {
+                    spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
+                } else if (rand2 <= 7){
+                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, Math.PI/36, 3), 90);
+                } else{
+                    spawn(new Splash(new Vector2(0, -20), 2, 50, 50), 90);
+                }
+            }  else{
+                int rand2 = (int) (Math.random() * 16 / slow);
+                if (rand2 <= 1) {
+                    spawn(new Regular(new Vector2(0, -20), 2, 25), 90);
+                } else if (rand2 <= 4) {
+                    spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
+                } else if (rand2 <= 7){
+                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, Math.PI/36, 3), 90);
+                } else if (rand2 <= 11){
+                    spawn(new Splash(new Vector2(0, -20), 2, 50, 50), 90);
+                } else{
+                    spawn(new Rocket(new Vector2(0, -20), 1, 50, 10), 90);
                 }
             }
+
 
             if (civiliansC >= civiliansN) {
                 civiliansC -= civiliansN;
@@ -160,6 +179,14 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         }
 
         repaint();
+    }
+    public void spawn(Entity wut, int chance){
+        int rand = (int) (Math.random() * 50 / slow);
+        if(rand == 1) {
+            int x_val = (int) (Math.random() * 910) - 20;
+            wut.pos.x = x_val;
+            entities.add(wut);
+        }
     }
 
     @Override

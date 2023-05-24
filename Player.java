@@ -49,8 +49,9 @@ public class Player extends Entity{
                 break;
             case 1:
                 cd[0].setCd(5);
-                dmg = .5;
+                dmg = 1;
                 sped *= 2;
+                pv = 10;
                 maxSpread = 80;
                 break;
             case 2:
@@ -117,6 +118,7 @@ public class Player extends Entity{
                 ability2 = true;
                 cd[3].multCD(.25);
                 cd[3].cd();
+                break;
             case 1:
                 sped *= .5;
                 ability2 = true;
@@ -163,7 +165,7 @@ public class Player extends Entity{
             /*if(classn != 0) {
                 if(cd[0].cd()) {
                     Vector2 direction = Board.mousePos.sub(pos).normalize();
-                    Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv);
+                    Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
                     Board.entities.add(bullet);
                 }
             }*/
@@ -222,6 +224,9 @@ public class Player extends Entity{
             cd[3].resetCooldown();
             if(cd[3].getCd()){
                 ability2=false;
+                for(Entity e: Board.entities){
+                    e.velo = e.velo.multiply(1/Board.slow);
+                }
                 switch(classn) {
                     case 0:
                         Board.slow = 1;
@@ -229,9 +234,6 @@ public class Player extends Entity{
                     case 1:
                         sped *=2;
                         break;
-                }
-                for(Entity e: Board.entities){
-                    e.velo.multiply(Board.slow);
                 }
                 cd[3].multCD(4);
                 cd[3].cd();
