@@ -8,7 +8,7 @@ public class RocketBullet extends Entity{
     private double angle;
     private double turnSpeed;
     public RocketBullet(Vector2 pos, Vector2 posToGo, int speed, double turnSpeed) {
-        super("images/rocketBullet.png", pos, new int[]{1}, 5);
+        super("images/rocketBullet.png", pos, new int[]{1}, 10);
         this.projectile = true;
         this.posToGo = posToGo;
         this.speed = speed;
@@ -31,7 +31,7 @@ public class RocketBullet extends Entity{
         if(started){
             if(angle < Board.player.pos.sub(pos).getAngle()){
                 angle += turnSpeed;
-            } else if(angle > Board.player.pos.sub(pos).getAngle()){
+            }else if (angle > Board.player.pos.sub(pos).getAngle()){
                 angle -= turnSpeed;
             }
             Vector2 input = new Vector2(angle);

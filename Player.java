@@ -17,8 +17,6 @@ public class Player extends Entity{
     //0 = atk, 1 = dash, 2 = 1st ability(uptime), 3 = 2nd ability(uptime).
     private double pv;
     private double dmg = 1;
-    private int gun = 0;
-    private int maxGun = 1;
     public double angle;
     public int swing;
 
@@ -60,8 +58,8 @@ public class Player extends Entity{
                 break;
             case 2:
                 pv = 10;
-                cd[1].setCd(100);
-                cd[2].setCd(100);
+                cd[2].setCd(120);
+                cd[3].setCd(40);
                 break;
             case 3:
                 Board.entities.add(new NinjaSwing());
@@ -110,17 +108,9 @@ public class Player extends Entity{
                 cd[2].cd();
                 break;
             case 2:
-                gun++;
-                gun = gun%maxGun;
+                Boomerang boomerang = new Boomerang(pos,pv);
+                Board.entities.add(boomerang);
                 cd[2].cd();
-                switch (gun){
-                    case 0:
-                        cd[0].setCd(10);
-                    case 1:
-                        cd[0].setCd(40);
-                    case 2:
-                        cd[0].setCd(120);
-                }
                 break;
             case 3:
                 break;
@@ -149,20 +139,14 @@ public class Player extends Entity{
                 cd[3].cd();
                 break;
             case 2:
-                gun--;
-                if(gun<0){
-                    gun+=maxGun;
-                }
-                gun = gun%maxGun;
+                Vector2 direction = new Vector2(Math.toRadians(Math.toDegrees(Board.mousePos.sub(pos).getAngle())+Math.random()*spread-spread/2));
+                Bullet bullet1 = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
+                Board.entities.add(bullet1);
+                Bullet bullet2 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()+0.349066), new int[]{2}, pv, (int)dmg);
+                Board.entities.add(bullet2);
+                Bullet bullet3 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()-0.349066), new int[]{2}, pv, (int)dmg);
+                Board.entities.add(bullet3);
                 cd[3].cd();
-                switch (gun){
-                    case 0:
-                        cd[0].setCd(10);
-                    case 1:
-                        cd[0].setCd(40);
-                    case 2:
-                        cd[0].setCd(120);
-                }
                 break;
             case 3:
                 break;
@@ -213,36 +197,15 @@ public class Player extends Entity{
         inputs.replace("Click", false);
     }
     public void update() {
-        if(maxGun<3&&classn==2){
-            if(Board.level>0){
-                maxGun = 3;
-            } else if (Board.level>2) {
-                maxGun = 2;
-            }
-        }
         if(inputs.get("Click")){
             Vector2 direction = new Vector2(Math.toRadians(Math.toDegrees(Board.mousePos.sub(pos).getAngle())+Math.random()*spread-spread/2));
             switch (classn) {
                 case 2:
                     if(cd[0].cd()){
-                        switch(gun){
-                            case 0:
-                                Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
-                                Board.entities.add(bullet);
-                                break;
-                            case 1:
-                                Bullet bullet1 = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
-                                Board.entities.add(bullet1);
-                                Bullet bullet2 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()+0.349066), new int[]{2}, pv, (int)dmg);
-                                Board.entities.add(bullet2);
-                                Bullet bullet3 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()-0.349066), new int[]{2}, pv, (int)dmg);
-                                Board.entities.add(bullet3);
-                                break;
-                            case 2:
-                                Boomerang boomerang = new Boomerang(pos,pv);
-                                Board.entities.add(boomerang);
-                                break;
-                        }
+                        Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
+                        Board.entities.add(bullet);
+                        break;
+
                     }
                     break;
                 case 3:
@@ -270,8 +233,8 @@ public class Player extends Entity{
             cd[0].resetCooldown();
         }
         if(cd[2].getCd()){
-            if((maxGun>1||Board.level>7)&&inputs.get("Q")) {
-                ability2();
+            if(Board.level>2&&inputs.get("E")) {
+                ability1();
             }
         }else if(ability1){
             cd[2].resetCooldown();
@@ -288,8 +251,8 @@ public class Player extends Entity{
         }
 
         if(cd[3].getCd()){
-            if((maxGun>0||Board.level>2)&&inputs.get("E")) {
-                ability1();
+            if(Board.level>7&&inputs.get("Q")) {
+                ability2();
             }
         }else if(ability2){
             cd[3].resetCooldown();

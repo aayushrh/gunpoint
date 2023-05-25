@@ -1,5 +1,5 @@
 public class ShieldSummon extends Entity {
-    public Shield followEntity;
+    private Shield followEntity;
     private int ID;
     private double cA;
     private double angleSpeed;
@@ -19,11 +19,6 @@ public class ShieldSummon extends Entity {
         cA = layerNum*360.0/totalLayerNum;
     }
     public void update(){
-        System.out.println(followEntity.pos.x + " " + followEntity.pos.y);
-        if(followEntity.pos.equals(new Vector2(0.0, -20.0))){
-            hp = -1;
-            Board.entities.remove(this);
-        }
         cA = (cA+angleSpeed*Board.slow)%360;
         pos = followEntity.pos.add(new Vector2(Math.toRadians(cA)).multiply(distance));
         if(followEntity.hp<=0){
