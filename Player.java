@@ -2,23 +2,25 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 public class Player extends Entity{
-    private HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
+    public HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
     public int classn;
     private String className = "<Empty>";
 
-    private double sped = 1.5;
+    public double sped = 1.5;
     public boolean ability1 = false;
     public boolean ability2 = false;
     private double spread = 0;
     private double maxSpread = 0;
-    private Vector2 dash = null;
+    public Vector2 dash = null;
 
-    private Cooldown[] cd = {new Cooldown(10),new Cooldown(100), new Cooldown(200), new Cooldown(400)};
+    public Cooldown[] cd = {new Cooldown(10),new Cooldown(100), new Cooldown(200), new Cooldown(400)};
     //0 = atk, 1 = dash, 2 = 1st ability(uptime), 3 = 2nd ability(uptime).
     private double pv;
     private double dmg = 1;
     private int gun = 0;
     private int maxGun = 1;
+    public double angle;
+    public int swing;
 
     public Player(int classn) {
         super("images/players/ninja.png", new Vector2(400, 250), new int[]{1}, 25);
@@ -62,7 +64,10 @@ public class Player extends Entity{
                 cd[2].setCd(100);
                 break;
             case 3:
-                cd[0].setCd(20);
+                cd[0].setCd(13);
+                cd[1].setCd(0);
+                cd[2].setCd(80);
+                angle = 40;
                 break;
             case 4:
                 cd[0].setCd(-1);
@@ -226,9 +231,9 @@ public class Player extends Entity{
                             case 1:
                                 Bullet bullet1 = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
                                 Board.entities.add(bullet1);
-                                Bullet bullet2 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()+0.698132), new int[]{2}, pv, (int)dmg);
+                                Bullet bullet2 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()+0.349066), new int[]{2}, pv, (int)dmg);
                                 Board.entities.add(bullet2);
-                                Bullet bullet3 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()-0.698132), new int[]{2}, pv, (int)dmg);
+                                Bullet bullet3 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()-0.349066), new int[]{2}, pv, (int)dmg);
                                 Board.entities.add(bullet3);
                                 break;
                             case 2:
@@ -238,6 +243,10 @@ public class Player extends Entity{
                         }
                     }
                     break;
+                case 3:
+                    if(cd[0].cd()){
+                        swing = 5;
+                    }
                 default:
                     if (cd[0].cd()) {
                         Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
