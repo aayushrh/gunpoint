@@ -64,7 +64,9 @@ public class Player extends Entity{
                 cd[2].setCd(100);
                 break;
             case 3:
+                Board.entities.add(new NinjaSwing());
                 cd[0].setCd(13);
+                //cd[0].setCd(1);
                 cd[1].setCd(0);
                 cd[2].setCd(80);
                 angle = 40;
@@ -362,7 +364,7 @@ public class Player extends Entity{
 
     public void collide(Entity other){
         System.out.println("hit");
-        if(!ability2||classn!=1) {
+        if((!ability2||classn!=1)&&!(other instanceof NinjaSwing)) {
             hp--;
         }
     }

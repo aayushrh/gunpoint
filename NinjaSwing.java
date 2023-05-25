@@ -3,13 +3,12 @@ import java.util.Arrays;
 
 public class NinjaSwing extends Entity{
     public NinjaSwing(){
-        super("", new Vector2(), new int[] {1,2},100 );
+        super("images/player_bullet.png", new Vector2(400, 250), new int[] {1,2},100 );
+        projectile = true;
+        loadImage("images/player_bullet.png");
     }
 
     public void update(){
-        if(Board.player.swing>0){
-            Board.player.swing--;
-        }
         Vector2 input = new Vector2();
         if(Board.player.inputs.get("W")){
             input = input.add(new Vector2(0, -1));
@@ -48,22 +47,35 @@ public class NinjaSwing extends Entity{
         if(Board.outOfBoundsY(pos)){
             pos = pos.sub(new Vector2(0,velo.y));
         }
+        if(Board.player.swing>0) {
+            Board.player.swing--;
+            for(int i = 0; i < Board.entities.size(); i++) {
+                ArrayList<Integer> temp = new ArrayList<>();
+                temp.add(1);
+                if (((Board.entities.get(i) instanceof Enemy) || (Board.entities.get(i).projectile && temp.equals(Board.entities.get(i).collLayer))) && Board.player.swing > 0) {
+                    if(isCollide(Board.entities.get(i))) Board.entities.get(i).hp -= 1;
+                }
+            }
+        }
     }
-    public boolean isCollide(Vector2 other, int collRad){
+    public boolean isCollide(Entity other){
+        Vector2 otherr = other.pos;
+        int otherRad = other.collRad;
         Vector2 direction = Board.mousePos.normalize();
         Line one = new Line(Board.player.pos,new Vector2(direction.getAngle()+Math.toRadians(Board.player.angle)).multiply(collRad));
         Line two = new Line(Board.player.pos,new Vector2(direction.getAngle()-Math.toRadians(Board.player.angle)).multiply(collRad));
-        if(pos.distTo(other)<collRad+this.collRad){
-            if(other.sub(pos))
+        if(pos.distTo(otherr)<otherRad+this.collRad){
+            double a = Math.toDegrees(otherr.sub(pos).getAngle());
+            double f = Math.toDegrees(direction.getAngle());
+            if(a<f-Board.player.angle||a>f+Board.player.angle){
+                return one.closestPoint(otherr).distTo(otherr)<otherRad||two.closestPoint(otherr).distTo(otherr)<otherRad;
+            }else{
+                return true;
+            }
         }
         return false;
     }
 
     public void collide(Entity other){
-        ArrayList<Integer> temp = new ArrayList<>();
-        temp.add(1);
-        if(((other instanceof Enemy)||(other.projectile&& temp.equals(other.collLayer)))&&Board.player.swing>0) {
-            other.hp -= 1;
-        }
     }
 }
