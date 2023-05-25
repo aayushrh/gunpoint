@@ -1,5 +1,5 @@
 public class ShieldSummon extends Entity {
-    private Shield followEntity;
+    public Shield followEntity;
     private int ID;
     private double cA;
     private double angleSpeed;
