@@ -54,7 +54,7 @@ public class NinjaSwing extends Entity{
         Line one = new Line(Board.player.pos,new Vector2(direction.getAngle()+Math.toRadians(Board.player.angle)).multiply(collRad));
         Line two = new Line(Board.player.pos,new Vector2(direction.getAngle()-Math.toRadians(Board.player.angle)).multiply(collRad));
         if(pos.distTo(other)<collRad+this.collRad){
-            if(other.sub(pos))
+            //if(other.sub(pos))
         }
         return false;
     }

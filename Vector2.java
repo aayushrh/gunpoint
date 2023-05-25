@@ -61,4 +61,8 @@ public class Vector2 {
     public double distTo(Vector2 other){
         return Math.abs((this.sub(other).getMag()));
     }
+
+    public boolean equals(Vector2 other){
+        return distTo(other) == 0;
+    }
 }
