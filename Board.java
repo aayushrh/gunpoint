@@ -117,7 +117,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
             }
         }
         if(player != null) {
-            int num = (int) (Math.random() * 100 / slow);
+            int num = (int) (Math.random() * 500 / slow);
             if (num == 1) {
                 int x_val = (int) (Math.random() * 910) - 20;
                 Civilian civ = new Civilian(new Vector2(x_val, -20), 5);
@@ -130,7 +130,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                 int rand2 = (int) (Math.random() * 3 / slow);
                 if (rand2 <= 1) {
                     //spawn(new Regular(new Vector2(0, -20), 2, 25), 90);
-                    spawn(new Regular(new Vector2(0,-20),1,25),90);
+                    spawn(new Shield(new Vector2(1,1),1,100,1+level/10,5,1),90);
                 } else {
                     spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
                 }
@@ -141,7 +141,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                 } else if (rand2 <= 4) {
                     spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
                 } else{
-                    spawn(new Shield(new Vector2(0, 30), 2, 25, 2, 3, 3), 90);
+                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, Math.PI/36, 3), 90);
                 }
             } else if (level <= 11){
                 int rand2 = (int) (Math.random() * 12 / slow);
@@ -150,7 +150,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                 } else if (rand2 <= 4) {
                     spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
                 } else if (rand2 <= 7){
-                    spawn(new Shield(new Vector2(0, 30), 2, 25, 2, 3, 3), 90);
+                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, Math.PI/36, 3), 90);
                 } else{
                     spawn(new Splash(new Vector2(0, -20), 2, 50, 50), 90);
                 }
@@ -161,7 +161,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                 } else if (rand2 <= 4) {
                     spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 90);
                 } else if (rand2 <= 7){
-                    spawn(new Shield(new Vector2(0, 30), 2, 25, 2, 3, 3), 90);
+                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, Math.PI/36, 3), 90);
                 } else if (rand2 <= 11){
                     spawn(new Splash(new Vector2(0, -20), 2, 50, 50), 90);
                 } else{
@@ -182,9 +182,9 @@ public class Board extends JPanel implements ActionListener, KeyListener{
         repaint();
     }
     public void spawn(Entity wut, int chance){
-        int rand = (int) (Math.random() * chance / slow);
+        int rand = (int) (Math.random() * 50 / slow);
         if(rand == 1) {
-            int x_val = (int) (Math.random() * 800) + 30;
+            int x_val = (int) (Math.random() * 910) - 20;
             wut.pos.x = x_val;
             entities.add(wut);
         }
@@ -193,17 +193,8 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         for (Entity en : entities) {
-            boolean draw = true;
-            if(en instanceof ShieldSummon){
-                if(((ShieldSummon)en).followEntity.pos.equals(new Vector2(0.0, 30.0))){
-                    draw = false;
-                }
-            }
-            if(draw) {
-                en.draw(g, this);
-            }
+            en.draw(g, this);
         }
 
         Toolkit.getDefaultToolkit().sync();

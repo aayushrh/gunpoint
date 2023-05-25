@@ -17,6 +17,8 @@ public class Player extends Entity{
     //0 = atk, 1 = dash, 2 = 1st ability(uptime), 3 = 2nd ability(uptime).
     private double pv;
     private double dmg = 1;
+    private int gun = 0;
+    private int maxGun = 1;
 
     public Player(int classn) {
         super("images/players/ninja.png", new Vector2(400, 250), new int[]{1}, 25);
@@ -55,6 +57,9 @@ public class Player extends Entity{
                 maxSpread = 80;
                 break;
             case 2:
+                pv = 10;
+                cd[1].setCd(100);
+                cd[2].setCd(100);
                 break;
             case 3:
                 cd[0].setCd(20);
@@ -98,6 +103,17 @@ public class Player extends Entity{
                 cd[2].cd();
                 break;
             case 2:
+                gun++;
+                gun = gun%maxGun;
+                cd[2].cd();
+                switch (gun){
+                    case 0:
+                        cd[0].setCd(10);
+                    case 1:
+                        cd[0].setCd(40);
+                    case 2:
+                        cd[0].setCd(120);
+                }
                 break;
             case 3:
                 break;
@@ -126,6 +142,20 @@ public class Player extends Entity{
                 cd[3].cd();
                 break;
             case 2:
+                gun--;
+                if(gun<0){
+                    gun+=maxGun;
+                }
+                gun = gun%maxGun;
+                cd[3].cd();
+                switch (gun){
+                    case 0:
+                        cd[0].setCd(10);
+                    case 1:
+                        cd[0].setCd(40);
+                    case 2:
+                        cd[0].setCd(120);
+                }
                 break;
             case 3:
                 break;
@@ -176,18 +206,48 @@ public class Player extends Entity{
         inputs.replace("Click", false);
     }
     public void update() {
+        if(maxGun<3&&classn==2){
+            if(Board.level>0){
+                maxGun = 3;
+            } else if (Board.level>2) {
+                maxGun = 2;
+            }
+        }
         if(inputs.get("Click")){
             Vector2 direction = new Vector2(Math.toRadians(Math.toDegrees(Board.mousePos.sub(pos).getAngle())+Math.random()*spread-spread/2));
             switch (classn) {
+                case 2:
+                    if(cd[0].cd()){
+                        switch(gun){
+                            case 0:
+                                Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
+                                Board.entities.add(bullet);
+                                break;
+                            case 1:
+                                Bullet bullet1 = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
+                                Board.entities.add(bullet1);
+                                Bullet bullet2 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()+0.698132), new int[]{2}, pv, (int)dmg);
+                                Board.entities.add(bullet2);
+                                Bullet bullet3 = new Bullet(pos, new Vector2(Board.mousePos.sub(pos).getAngle()-0.698132), new int[]{2}, pv, (int)dmg);
+                                Board.entities.add(bullet3);
+                                break;
+                            case 2:
+                                Boomerang boomerang = new Boomerang(pos,pv);
+                                Board.entities.add(boomerang);
+                                break;
+                        }
+                    }
+                    break;
                 default:
                     if (cd[0].cd()) {
                         Bullet bullet = new Bullet(pos, direction, new int[]{2}, pv, (int)dmg);
-                        if (ability1) bullet.piercing = true;
+                        if (ability1&&classn==0) bullet.piercing = true;
                         Board.entities.add(bullet);
                         if(spread<maxSpread){
                             spread+=(maxSpread-spread)*.005;
                         }
                     }
+                    break;
             }
         }else{
             if(spread>0){
@@ -199,7 +259,7 @@ public class Player extends Entity{
             cd[0].resetCooldown();
         }
         if(cd[2].getCd()){
-            if(Board.level>7&&inputs.get("Q")) {
+            if((maxGun>1||Board.level>7)&&inputs.get("Q")) {
                 ability2();
             }
         }else if(ability1){
@@ -217,7 +277,7 @@ public class Player extends Entity{
         }
 
         if(cd[3].getCd()){
-            if(Board.level>2&&inputs.get("E")) {
+            if((maxGun>0||Board.level>2)&&inputs.get("E")) {
                 ability1();
             }
         }else if(ability2){
