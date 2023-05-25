@@ -176,7 +176,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                 } else if (rand2 <= 4) {
                     spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 120);
                 } else{
-                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, 3, 3), 150);
+                    spawn(new Shield(new Vector2(0, 30), 2, 25, 2, 3, 3), 150);
                 }
             } else if (level <= 8){
                 int rand2 = (int) (Math.random() * 12 / slow);
@@ -185,7 +185,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                 } else if (rand2 <= 4) {
                     spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 120);
                 } else if (rand2 <= 7){
-                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, 3, 3), 150);
+                    spawn(new Shield(new Vector2(0, 30), 2, 25, 2, 3, 3), 150);
                 } else{
                     spawn(new Splash(new Vector2(0, -20), 2, 50, 50), 175);
                 }
@@ -196,7 +196,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
                 } else if (rand2 <= 4) {
                     spawn(new Spiral(new Vector2(0, -20), 2, 100, 25, 10,1), 120);
                 } else if (rand2 <= 7){
-                    spawn(new Shield(new Vector2(0, -20), 2, 25, 2, 3, 3), 150);
+                    spawn(new Shield(new Vector2(0, 30), 2, 25, 2, 3, 3), 150);
                 } else if (rand2 <= 11){
                     spawn(new Splash(new Vector2(0, -20), 2, 50, 50), 175);
                 } else{
@@ -229,15 +229,7 @@ public class Board extends JPanel implements ActionListener, KeyListener{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (Entity en : entities) {
-            boolean draw = true;
-            if(en instanceof ShieldSummon){
-                if(((ShieldSummon)en).followEntity.pos.equals(new Vector2(0, -20))){
-                    draw = false;
-                }
-            }
-            if(draw) {
-                en.draw(g, this);
-            }
+            en.draw(g, this);
         }
 
         Toolkit.getDefaultToolkit().sync();

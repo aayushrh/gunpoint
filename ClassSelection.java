@@ -4,13 +4,15 @@ import java.util.HashMap;
 public class ClassSelection extends Entity{
     private HashMap<String, Boolean> inputs = new HashMap<String, Boolean>();
     public int classn;
-    private String[] classNames = {"sniper","machineGun","classic","ninja","summoner"};
+    private String[] classNames = {"sniper","machineGun","classic", "ninja", "summoner"};
+    private Cooldown cd = null;
 
     public ClassSelection() {
         super("images/screens/sniperScreen.png", new Vector2(0, 0), new int[]{1}, 25);
         inputs.put("Left", false);
         inputs.put("Right", false);
         inputs.put("Enter", false);
+        cd = new Cooldown(10);
         this.classn = 0;
         pos = new Vector2(image.getWidth()/4, image.getHeight()/4);
     }
@@ -42,16 +44,18 @@ public class ClassSelection extends Entity{
     }
 
     public void update() {
-        if(inputs.get("Left")){
-            classn = classn - 1;
-            if(classn < 0){
-                classn = classNames.length + classn;
+        if(cd.cd()) {
+            if (inputs.get("Left")) {
+                classn = classn - 1;
+                if (classn < 0) {
+                    classn = classNames.length + classn;
+                }
+                loadImage("images/screens/" + classNames[classn] + "Screen.png");
             }
-            loadImage("images/screens/" + classNames[classn] + "Screen.png");
-        }
-        if(inputs.get("Right")){
-            classn = (classn + 1) % classNames.length;
-            loadImage("images/screens/" + classNames[classn] + "Screen.png");
+            if (inputs.get("Right")) {
+                classn = (classn + 1) % classNames.length;
+                loadImage("images/screens/" + classNames[classn] + "Screen.png");
+            }
         }
         if(inputs.get("Enter")){
             hp = -1;
